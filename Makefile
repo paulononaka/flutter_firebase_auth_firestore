@@ -35,6 +35,9 @@ watch:
 codegen:
 	flutter packages pub run build_runner build --delete-conflicting-outputs
 
+get-packages:
+	flutter pub get
+
 install: get-packages codegen
 
 run:
