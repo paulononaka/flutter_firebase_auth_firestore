@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_auth_firestore/design_system/components/flufire_scaffold.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
@@ -43,7 +43,7 @@ class SignUpPage extends StatelessWidget {
 
   Widget loaded(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return FlufireScaffold(
+    return FlutfireScaffold(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

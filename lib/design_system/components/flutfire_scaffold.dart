@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
 
-class FlufireScaffold extends StatelessWidget {
+class FlutfireScaffold extends StatelessWidget {
   final Widget child;
-  const FlufireScaffold({
+  const FlutfireScaffold({
     Key? key,
     required this.child,
     this.hasBackButton = true,

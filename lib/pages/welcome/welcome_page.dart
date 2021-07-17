@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_auth_firestore/design_system/components/flufire_scaffold.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
@@ -26,12 +26,12 @@ class WelcomePage extends StatelessWidget {
 
   Widget loaded(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return FlufireScaffold(
+    return FlutfireScaffold(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text("WELCOME TO FLUFIRE", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("WELCOME TO FLUTFIRE", style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: size.height * 0.05),
             SizedBox(height: size.height * 0.45, child: Images.welcome),
             SizedBox(height: size.height * 0.05),

@@ -1,6 +1,6 @@
 # flutter_firebase_auth_firestore
 
-A new Flutter project.
+Flut Fire - a complete Flutter project with Firebase Authentication/Firestore and API calls.
 
 ## Setup
 
