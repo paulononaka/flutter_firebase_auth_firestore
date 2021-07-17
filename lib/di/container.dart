@@ -1,3 +1,4 @@
+import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
@@ -22,6 +23,7 @@ void setup() {
   getIt.registerFactory<HomeBloc>(() => HomeBloc());
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
 
-  // Navigation
-  getIt.registerFactory(() => const AppNavigator());
+  // Common
+  getIt.registerFactory(() => AuthManager());
+  getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
 }

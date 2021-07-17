@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
@@ -12,7 +13,9 @@ class Routes {
 }
 
 class AppNavigator extends StatelessWidget {
-  const AppNavigator({final Key? key}) : super(key: key);
+  const AppNavigator({final Key? key, required this.authManager}) : super(key: key);
+
+  final AuthManager authManager;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,10 @@ class AppNavigator extends StatelessWidget {
   }
 
   String initialRoute() {
-    return Routes.welcome;
+    if (authManager.isLoggedIn) {
+      return Routes.home;
+    } else {
+      return Routes.welcome;
+    }
   }
 }
