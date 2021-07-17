@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
-import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
+import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:get_it/get_it.dart';
 import 'di/container.dart' as di;
 
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(bloc: GetIt.I.get<HomeBloc>()),
+      builder: (BuildContext _, Widget? __) => GetIt.I.get<AppNavigator>(),
     );
   }
 }
