@@ -37,6 +37,9 @@ codegen:
 
 install: get-packages codegen
 
+run:
+	flutter run -t lib/main.dart
+
 upgrade:
 	flutter pub upgrade
 	cd ios && pod repo update
