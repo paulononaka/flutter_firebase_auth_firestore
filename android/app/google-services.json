@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "957715618865",
+    "project_id": "flutfire-e08a4",
+    "storage_bucket": "flutfire-e08a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957715618865:android:a2da2ac048e35a9237c910",
+        "android_client_info": {
+          "package_name": "com.paulononaka.flutfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957715618865-dqqka2o4rs9c4apd54q1c7pjtv2d9m8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIAtakdxDz1XZOWzYTcGtSU08ICfrtTQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957715618865-dqqka2o4rs9c4apd54q1c7pjtv2d9m8m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "957715618865-kkrjvr5lt47j2p76kglusjis280m2lv3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.paulononaka.flutfire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
