@@ -13,15 +13,13 @@ class AuthManager {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        throw AuthException(e, 'The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        throw AuthException(e, 'The account already exists for that email.');
+      if (e.message != null) {
+        throw AuthException(e, e.message!);
       } else {
         rethrow;
       }
     } catch (e) {
-      throw AuthException(e, 'An unknown error Sign Up error happened :(');
+      throw AuthException(e, 'An unknown Sign Up error happened :(');
     }
   }
 
@@ -29,15 +27,13 @@ class AuthManager {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw AuthException(e, 'No user found for the provided email.');
-      } else if (e.code == 'wrong-password') {
-        throw AuthException(e, 'Wrong password provided.');
+      if (e.message != null) {
+        throw AuthException(e, e.message!);
       } else {
         rethrow;
       }
     } catch (e) {
-      throw AuthException(e, 'An unknown error Sign In error happened :(');
+      throw AuthException(e, 'An unknown Sign In error happened :(');
     }
   }
 

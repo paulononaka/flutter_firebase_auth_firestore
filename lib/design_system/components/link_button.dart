@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 
 class LinkButton extends StatelessWidget {
-  const LinkButton({Key? key, required this.text, this.onPressed}) : super(key: key);
+  const LinkButton({
+    Key? key,
+    required this.text,
+    this.boldText,
+    this.onPressed,
+  }) : super(key: key);
 
   final VoidCallback? onPressed;
   final String text;
+  final String? boldText;
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +20,15 @@ class LinkButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          //Text(text, style: const TextStyle(color: ColorPalette.primaryColor)),
           Text(text),
-          const Text(
-            "Sign Up",
-            style: TextStyle(
-              color: ColorPalette.primaryColor,
-              fontWeight: FontWeight.bold,
+          if (boldText != null)
+            Text(
+              boldText!,
+              style: const TextStyle(
+                color: ColorPalette.primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
         ],
       ),
     );

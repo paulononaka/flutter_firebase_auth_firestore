@@ -6,4 +6,5 @@ part 'sign_up_state.freezed.dart';
 class SignUpState with _$SignUpState {
   const factory SignUpState.loading() = _Loading;
   const factory SignUpState.loaded() = _Loaded;
+  const factory SignUpState.error(String message) = _Error;
 }

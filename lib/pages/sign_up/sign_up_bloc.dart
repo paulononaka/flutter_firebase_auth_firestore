@@ -23,9 +23,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield const SignUpState.loading();
       await authManager.signUp(email: email, password: password);
       await navigatorState.pushNamed(Routes.home);
+      yield const SignUpState.loaded();
+    } on AuthException catch (e) {
+      yield SignUpState.error(e.message);
     } catch (e) {
-      debugPrint(e.toString());
+      yield const SignUpState.error('An unknown error happened :(');
     }
-    yield const SignUpState.loaded();
   }
 }
