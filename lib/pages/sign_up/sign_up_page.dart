@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/link_button.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 
-import '../../design_system/components/link_button.dart';
 import 'sign_up_bloc.dart';
 import 'sign_up_event.dart';
 import 'sign_up_state.dart';
@@ -31,7 +31,6 @@ class SignUpPage extends StatelessWidget {
   }
 
   Widget loading(BuildContext context) {
-    bloc.add(const SignUpEvent.load());
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(
@@ -53,7 +52,16 @@ class SignUpPage extends StatelessWidget {
             SizedBox(height: size.height * 0.35, child: Images.signup),
             RoundedInputField(hintText: "Your Email", onChanged: (value) {}),
             RoundedPasswordField(onChanged: (value) {}),
-            const RoundedButton(text: "SIGNUP"),
+            RoundedButton(
+              text: "SIGNUP",
+              onPressed: () => bloc.add(
+                SignUpEvent.tapOnSignUp(
+                  navigatorState: Navigator.of(context),
+                  email: 'barry.allen@example.com',
+                  password: 'SuperSecretPassword!',
+                ),
+              ),
+            ),
             SizedBox(height: size.height * 0.03),
             const LinkButton(text: 'Don’t have an Account ? '),
           ],

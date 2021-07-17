@@ -11,19 +11,19 @@ import 'package:get_it/get_it.dart';
 void setup() {
   final getIt = GetIt.instance;
 
+  // Common
+  getIt.registerFactory(() => AuthManager());
+  getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
+
   // Welcome
   getIt.registerFactory<WelcomeBloc>(() => WelcomeBloc());
   getIt.registerFactory<WelcomePage>(() => WelcomePage(bloc: GetIt.I.get<WelcomeBloc>()));
 
   // Sign Up
-  getIt.registerFactory<SignUpBloc>(() => SignUpBloc());
+  getIt.registerFactory<SignUpBloc>(() => SignUpBloc(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<SignUpPage>(() => SignUpPage(bloc: GetIt.I.get<SignUpBloc>()));
 
   // Home
   getIt.registerFactory<HomeBloc>(() => HomeBloc());
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
-
-  // Common
-  getIt.registerFactory(() => AuthManager());
-  getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
 }
