@@ -66,8 +66,6 @@ lint:
 # Build and upload
 # ==================================================================================================
 
-# Build
-
 build-android:
 	flutter build apk -t lib/main.dart
 
