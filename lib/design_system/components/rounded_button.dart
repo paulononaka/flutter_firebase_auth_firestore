@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_auth_firestore/design_system/color_palette.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
@@ -28,10 +28,7 @@ class RoundedButton extends StatelessWidget {
             backgroundColor: color,
           ),
           onPressed: onPressed,
-          child: Text(
-            text,
-            style: TextStyle(color: textColor),
-          ),
+          child: Text(text, style: TextStyle(color: textColor)),
         ),
       ),
     );

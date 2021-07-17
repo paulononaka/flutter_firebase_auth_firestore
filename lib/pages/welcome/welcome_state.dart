@@ -4,6 +4,5 @@ part 'welcome_state.freezed.dart';
 
 @freezed
 class WelcomeState with _$WelcomeState {
-  const factory WelcomeState.loading() = _Loading;
   const factory WelcomeState.loaded() = _Loaded;
 }

@@ -49,7 +49,7 @@ upgrade:
 	cd ios && pod update
 
 format: 
-	flutter format . --line-length 120 | grep "Formatted"
+	flutter format . --line-length 100 | grep "Formatted"
 
 # ==================================================================================================
 # Tests
