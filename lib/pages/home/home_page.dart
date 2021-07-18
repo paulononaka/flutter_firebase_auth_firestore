@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 
 import 'home_bloc.dart';
@@ -27,14 +29,27 @@ class HomePage extends StatelessWidget {
   }
 
   Widget loaded(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return FlutfireScaffold(
       title: 'Flut Fire',
       logoutOnPressed: () => bloc.add(const HomeEvent.logout()),
-      child: Center(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text('You have pushed the button this many times:'),
+          children: <Widget>[
+            SizedBox(height: size.height * 0.03),
+            RoundedButton(
+              text: "Order a new test kit",
+              onPressed: () => bloc.add(
+                HomeEvent.tapOnOrder(navigatorState: Navigator.of(context)),
+              ),
+            ),
+            SizedBox(height: size.height * 0.03),
+            const Text("There is no recent orders", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.2, child: Images.empty),
+            SizedBox(height: size.height * 0.03),
+            const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.2, child: Images.healthy),
           ],
         ),
       ),

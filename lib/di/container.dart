@@ -2,6 +2,8 @@ import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
@@ -32,4 +34,8 @@ void setup() {
   // Home
   getIt.registerFactory<HomeBloc>(() => HomeBloc(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
+
+  // Order
+  getIt.registerFactory<OrderBloc>(() => OrderBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<OrderPage>(() => OrderPage(bloc: GetIt.I.get<OrderBloc>()));
 }
