@@ -38,18 +38,30 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: size.height * 0.03),
+            const Text("There is no recent orders", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.2, child: Images.empty),
+            SizedBox(height: size.height * 0.03),
+            const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: size.height * 0.2, child: Images.healthy),
+            SizedBox(height: size.height * 0.03),
             RoundedButton(
               text: "Order a new test kit",
               onPressed: () => bloc.add(
                 HomeEvent.tapOnOrder(navigatorState: Navigator.of(context)),
               ),
             ),
-            SizedBox(height: size.height * 0.03),
-            const Text("There is no recent orders", style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: size.height * 0.2, child: Images.empty),
-            SizedBox(height: size.height * 0.03),
-            const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: size.height * 0.2, child: Images.healthy),
+            RoundedButton(
+              text: "Tests",
+              onPressed: () => bloc.add(
+                HomeEvent.tapOnTests(navigatorState: Navigator.of(context)),
+              ),
+            ),
+            RoundedButton(
+              text: "My Profile",
+              onPressed: () => bloc.add(
+                HomeEvent.tapOnProfile(navigatorState: Navigator.of(context)),
+              ),
+            ),
           ],
         ),
       ),

@@ -8,7 +8,7 @@ class TextStyles {
   TextStyles._();
 
   static const TextStyle headline1 = TextStyle(
-      color: Color(0xFF1F252E),
+      color: ColorPalette.primaryColor,
       fontFamily: "Open Sans",
       fontSize: 34.00,
       fontWeight: FontWeight.w800,

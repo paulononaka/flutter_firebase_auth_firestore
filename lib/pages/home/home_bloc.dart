@@ -14,7 +14,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
-    yield* event.when(logout: _logout, tapOnOrder: _tapOnOrder);
+    yield* event.when(
+      logout: _logout,
+      tapOnOrder: _tapOnOrder,
+      tapOnTests: _tapOnTests,
+      tapOnProfile: _tapOnProfile,
+    );
   }
 
   Stream<HomeState> _logout() async* {
@@ -24,5 +29,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _tapOnOrder(NavigatorState navigatorState) async* {
     navigatorState.pushNamed(Routes.order);
+  }
+
+  Stream<HomeState> _tapOnTests(NavigatorState navigatorState) async* {
+    navigatorState.pushNamed(Routes.tests);
+  }
+
+  Stream<HomeState> _tapOnProfile(NavigatorState navigatorState) async* {
+    navigatorState.pushNamed(Routes.profile);
   }
 }

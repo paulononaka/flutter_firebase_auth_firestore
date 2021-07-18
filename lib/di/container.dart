@@ -4,10 +4,14 @@ import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/profile/profile_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/pages/tests/tests_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
 import 'package:get_it/get_it.dart';
@@ -38,4 +42,12 @@ void setup() {
   // Order
   getIt.registerFactory<OrderBloc>(() => OrderBloc(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<OrderPage>(() => OrderPage(bloc: GetIt.I.get<OrderBloc>()));
+
+  // Tests
+  getIt.registerFactory<TestsBloc>(() => TestsBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<TestsPage>(() => TestsPage(bloc: GetIt.I.get<TestsBloc>()));
+
+  // Profile
+  getIt.registerFactory<ProfileBloc>(() => ProfileBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<ProfilePage>(() => ProfilePage(bloc: GetIt.I.get<ProfileBloc>()));
 }

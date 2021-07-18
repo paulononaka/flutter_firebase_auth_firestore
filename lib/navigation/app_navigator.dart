@@ -3,8 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/tests/tests_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,6 +16,8 @@ class Routes {
   static const signIn = 'sign_in';
   static const home = 'home';
   static const order = 'order';
+  static const tests = 'tests';
+  static const profile = 'profile';
 }
 
 class AppNavigator extends StatefulWidget {
@@ -53,6 +57,12 @@ class _AppNavigatorState extends State<AppNavigator> {
             break;
           case Routes.order:
             builder = (BuildContext _) => getIt.get<OrderPage>();
+            break;
+          case Routes.tests:
+            builder = (BuildContext _) => getIt.get<TestsPage>();
+            break;
+          case Routes.profile:
+            builder = (BuildContext _) => getIt.get<ProfilePage>();
             break;
           default:
             throw Exception('Invalid route: ${settings.name}');
