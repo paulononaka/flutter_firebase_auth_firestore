@@ -14,16 +14,25 @@ class Routes {
   static const home = 'home';
 }
 
-class AppNavigator extends StatelessWidget {
-  const AppNavigator({final Key? key, required this.authManager}) : super(key: key);
+class AppNavigator extends StatefulWidget {
+  AppNavigator({Key? key, required this.authManager}) : super(key: key);
 
   final AuthManager authManager;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
+  State<StatefulWidget> createState() => _AppNavigatorState();
+}
+
+class _AppNavigatorState extends State<AppNavigator> {
+  @override
   Widget build(BuildContext context) {
+    widget.authManager.didLogout(_logout);
+
     final getIt = GetIt.I;
 
     return Navigator(
+      key: widget.navigatorKey,
       initialRoute: initialRoute(),
       onGenerateRoute: (RouteSettings settings) {
         WidgetBuilder builder;
@@ -49,10 +58,16 @@ class AppNavigator extends StatelessWidget {
   }
 
   String initialRoute() {
-    if (authManager.isLoggedIn) {
+    if (widget.authManager.isLoggedIn) {
       return Routes.home;
     } else {
       return Routes.welcome;
+    }
+  }
+
+  void _logout(bool hasLoggedOut) {
+    if (hasLoggedOut) {
+      widget.navigatorKey.currentState?.pushNamedAndRemoveUntil(Routes.welcome, (_) => false);
     }
   }
 }

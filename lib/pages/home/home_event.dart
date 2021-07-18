@@ -4,5 +4,5 @@ part 'home_event.freezed.dart';
 
 @freezed
 class HomeEvent with _$HomeEvent {
-  const factory HomeEvent.load() = _Load;
+  const factory HomeEvent.logout() = _Logout;
 }

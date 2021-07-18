@@ -13,7 +13,7 @@ import 'sign_up_event.dart';
 import 'sign_up_state.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({
+  const SignUpPage({
     required this.bloc,
     final Key? key,
   }) : super(key: key);

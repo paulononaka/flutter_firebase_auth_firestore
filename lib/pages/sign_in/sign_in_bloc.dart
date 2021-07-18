@@ -21,8 +21,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       NavigatorState navigatorState, String email, String password) async* {
     try {
       yield const SignInState.loading();
-      await authManager.signUp(email: email, password: password);
-      await navigatorState.pushNamed(Routes.home);
+      await authManager.signIn(email: email, password: password);
+      await navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
       yield const SignInState.loaded();
     } on AuthException catch (e) {
       yield SignInState.error(e.message);

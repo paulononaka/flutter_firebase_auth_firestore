@@ -14,7 +14,7 @@ void setup() {
   final getIt = GetIt.instance;
 
   // Common
-  getIt.registerFactory(() => AuthManager());
+  getIt.registerSingleton(AuthManager());
   getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
 
   // Welcome
@@ -30,6 +30,6 @@ void setup() {
   getIt.registerFactory<SignUpPage>(() => SignUpPage(bloc: GetIt.I.get<SignUpBloc>()));
 
   // Home
-  getIt.registerFactory<HomeBloc>(() => HomeBloc());
+  getIt.registerFactory<HomeBloc>(() => HomeBloc(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
 }

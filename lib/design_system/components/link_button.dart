@@ -5,6 +5,7 @@ class LinkButton extends StatelessWidget {
   const LinkButton({
     Key? key,
     required this.text,
+    this.textColor,
     this.boldText,
     this.onPressed,
   }) : super(key: key);
@@ -12,6 +13,7 @@ class LinkButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
   final String? boldText;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,12 @@ class LinkButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(text),
+          Text(text,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 19.00,
+              )),
           if (boldText != null)
             Text(
               boldText!,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 
 import 'home_bloc.dart';
+import 'home_event.dart';
 import 'home_state.dart';
 
 class HomePage extends StatelessWidget {
@@ -34,9 +36,10 @@ class HomePage extends StatelessWidget {
   }
 
   Widget loaded(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Center(
+    return FlutfireScaffold(
+      title: 'Flut Fire',
+      logoutOnPressed: () => bloc.add(const HomeEvent.logout()),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[

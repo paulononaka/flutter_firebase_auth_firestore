@@ -6,6 +6,7 @@ class AuthManager {
   AuthManager() : _firebaseAuth = FirebaseAuth.instance;
 
   final FirebaseAuth _firebaseAuth;
+  final _logoutController = StreamController<bool>.broadcast();
 
   bool get isLoggedIn => _firebaseAuth.currentUser != null;
 
@@ -39,6 +40,11 @@ class AuthManager {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
+    _logoutController.add(true);
+  }
+
+  void didLogout(void Function(bool hasLoggedOut) listen) {
+    _logoutController.stream.listen(listen);
   }
 }
 

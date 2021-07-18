@@ -13,7 +13,7 @@ import 'sign_in_event.dart';
 import 'sign_in_state.dart';
 
 class SignInPage extends StatefulWidget {
-  SignInPage({
+  const SignInPage({
     required this.bloc,
     final Key? key,
   }) : super(key: key);

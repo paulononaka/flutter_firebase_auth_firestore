@@ -7,9 +7,9 @@ import 'design_system/tokens/text_theme.dart';
 import 'di/container.dart' as di;
 
 Future<void> main() async {
-  di.setup();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  di.setup();
   runApp(const MyApp());
 }
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: ColorPalette.primaryColor,
         scaffoldBackgroundColor: ColorPalette.background,
       ),
-      builder: (BuildContext _, Widget? __) => GetIt.I.get<AppNavigator>(),
+      home: GetIt.I.get<AppNavigator>(),
     );
   }
 }

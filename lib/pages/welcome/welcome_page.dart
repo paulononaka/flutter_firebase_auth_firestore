@@ -35,7 +35,10 @@ class WelcomePage extends StatelessWidget {
             SizedBox(height: size.height * 0.05),
             SizedBox(height: size.height * 0.45, child: Images.welcome),
             SizedBox(height: size.height * 0.05),
-            const RoundedButton(text: "LOGIN"),
+            RoundedButton(
+              text: "LOGIN",
+              onPressed: () => bloc.add(WelcomeEvent.tapOnSignIn(Navigator.of(context))),
+            ),
             RoundedButton(
               text: "SIGN UP",
               color: ColorPalette.primaryLightColor,

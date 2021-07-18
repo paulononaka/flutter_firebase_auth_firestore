@@ -22,7 +22,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     try {
       yield const SignUpState.loading();
       await authManager.signUp(email: email, password: password);
-      await navigatorState.pushNamed(Routes.home);
+      await navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
       yield const SignUpState.loaded();
     } on AuthException catch (e) {
       yield SignUpState.error(e.message);
