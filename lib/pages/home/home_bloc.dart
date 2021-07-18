@@ -8,9 +8,9 @@ import 'home_event.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.authManager}) : super(const HomeState.loaded());
+  HomeBloc({required this.auth}) : super(const HomeState.loaded());
 
-  final AuthManager authManager;
+  final AuthManager auth;
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _logout() async* {
     yield const HomeState.loading();
-    authManager.logout();
+    auth.logout();
   }
 
   Stream<HomeState> _tapOnOrder(NavigatorState navigatorState) async* {

@@ -8,9 +8,9 @@ import 'order_event.dart';
 import 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc({required this.authManager}) : super(const OrderState.loaded());
+  OrderBloc({required this.auth}) : super(const OrderState.loaded());
 
-  final AuthManager authManager;
+  final AuthManager auth;
 
   @override
   Stream<OrderState> mapEventToState(OrderEvent event) async* {
@@ -21,7 +21,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       NavigatorState navigatorState, String email, String password) async* {
     try {
       yield const OrderState.loading();
-      await authManager.signIn(email: email, password: password);
+      await auth.signIn(email: email, password: password);
       navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield OrderState.error(e.message);

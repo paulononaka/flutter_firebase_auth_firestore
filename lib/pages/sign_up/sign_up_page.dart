@@ -9,6 +9,7 @@ import 'package:flutter_firebase_auth_firestore/design_system/components/rounded
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
+import 'package:flutter_firebase_auth_firestore/models/user.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 
 import 'sign_up_bloc.dart';
@@ -73,12 +74,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 onPressed: () => widget.bloc.add(
                   SignUpEvent.tapOnSignUp(
                     navigatorState: Navigator.of(context),
-                    email: emailController.text,
                     password: passwordController.text,
-                    name: nameController.text,
-                    dateOfBith: dateOfBirth,
-                    gender: selectedGender,
-                    genitalia: selectedGenitalia,
+                    user: User(
+                        email: emailController.text,
+                        name: nameController.text,
+                        dateOfBith: dateOfBirth,
+                        gender: selectedGender,
+                        genitalia: selectedGenitalia),
                   ),
                 ),
               ),
@@ -115,6 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
       'Transgender',
       'Two-Spirit',
       'Ze / Hir',
+      'Other',
     ];
   }
 

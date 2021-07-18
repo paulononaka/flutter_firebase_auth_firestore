@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_firebase_auth_firestore/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sign_up_event.freezed.dart';
@@ -7,12 +8,8 @@ part 'sign_up_event.freezed.dart';
 class SignUpEvent with _$SignUpEvent {
   const factory SignUpEvent.tapOnSignUp({
     required final NavigatorState navigatorState,
-    required final String email,
+    required final User user,
     required final String password,
-    required final String name,
-    required final DateTime dateOfBith,
-    required final String gender,
-    required final String genitalia,
   }) = _TapOnSignUp;
 
   const factory SignUpEvent.tapOnSignIn({

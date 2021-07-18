@@ -8,9 +8,9 @@ import 'sign_in_event.dart';
 import 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc({required this.authManager}) : super(const SignInState.loaded());
+  SignInBloc({required this.auth}) : super(const SignInState.loaded());
 
-  final AuthManager authManager;
+  final AuthManager auth;
 
   @override
   Stream<SignInState> mapEventToState(SignInEvent event) async* {
@@ -21,7 +21,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       NavigatorState navigatorState, String email, String password) async* {
     try {
       yield const SignInState.loading();
-      await authManager.signIn(email: email, password: password);
+      await auth.signIn(email: email, password: password);
       navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield SignInState.error(e.message);

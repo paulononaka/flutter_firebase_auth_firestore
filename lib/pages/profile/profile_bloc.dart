@@ -8,9 +8,9 @@ import 'profile_event.dart';
 import 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc({required this.authManager}) : super(const ProfileState.loaded());
+  ProfileBloc({required this.auth}) : super(const ProfileState.loaded());
 
-  final AuthManager authManager;
+  final AuthManager auth;
 
   @override
   Stream<ProfileState> mapEventToState(ProfileEvent event) async* {
@@ -21,7 +21,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       NavigatorState navigatorState, String email, String password) async* {
     try {
       yield const ProfileState.loading();
-      await authManager.signIn(email: email, password: password);
+      await auth.signIn(email: email, password: password);
       navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield ProfileState.error(e.message);

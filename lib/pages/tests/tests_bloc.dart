@@ -8,9 +8,9 @@ import 'tests_event.dart';
 import 'tests_state.dart';
 
 class TestsBloc extends Bloc<TestsEvent, TestsState> {
-  TestsBloc({required this.authManager}) : super(const TestsState.loaded());
+  TestsBloc({required this.auth}) : super(const TestsState.loaded());
 
-  final AuthManager authManager;
+  final AuthManager auth;
 
   @override
   Stream<TestsState> mapEventToState(TestsEvent event) async* {
@@ -21,7 +21,7 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
       NavigatorState navigatorState, String email, String password) async* {
     try {
       yield const TestsState.loading();
-      await authManager.signIn(email: email, password: password);
+      await auth.signIn(email: email, password: password);
       navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield TestsState.error(e.message);

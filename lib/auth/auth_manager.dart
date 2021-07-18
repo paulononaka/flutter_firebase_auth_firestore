@@ -38,6 +38,20 @@ class AuthManager {
     }
   }
 
+  Future<void> deleteCurrentUser() async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      if (e.message != null) {
+        throw AuthException(e, e.message!);
+      } else {
+        rethrow;
+      }
+    } catch (e) {
+      throw AuthException(e, 'An unknown error happened when deleting the user :(');
+    }
+  }
+
   Future<void> logout() async {
     await _firebaseAuth.signOut();
     _logoutController.add(true);

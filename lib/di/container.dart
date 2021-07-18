@@ -10,6 +10,7 @@ import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart'
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_bloc.dart';
@@ -28,26 +29,27 @@ void setup() {
   getIt.registerFactory<WelcomePage>(() => WelcomePage(bloc: GetIt.I.get<WelcomeBloc>()));
 
   // Sign In
-  getIt.registerFactory<SignInBloc>(() => SignInBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<SignInBloc>(() => SignInBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<SignInPage>(() => SignInPage(bloc: GetIt.I.get<SignInBloc>()));
 
   // Sign Up
-  getIt.registerFactory<SignUpBloc>(() => SignUpBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<SignUpRepository>(() => SignUpRepository(auth: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<SignUpBloc>(() => SignUpBloc(repository: GetIt.I.get<SignUpRepository>()));
   getIt.registerFactory<SignUpPage>(() => SignUpPage(bloc: GetIt.I.get<SignUpBloc>()));
 
   // Home
-  getIt.registerFactory<HomeBloc>(() => HomeBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<HomeBloc>(() => HomeBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
 
   // Order
-  getIt.registerFactory<OrderBloc>(() => OrderBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<OrderBloc>(() => OrderBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<OrderPage>(() => OrderPage(bloc: GetIt.I.get<OrderBloc>()));
 
   // Tests
-  getIt.registerFactory<TestsBloc>(() => TestsBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<TestsBloc>(() => TestsBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<TestsPage>(() => TestsPage(bloc: GetIt.I.get<TestsBloc>()));
 
   // Profile
-  getIt.registerFactory<ProfileBloc>(() => ProfileBloc(authManager: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<ProfileBloc>(() => ProfileBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<ProfilePage>(() => ProfilePage(bloc: GetIt.I.get<ProfileBloc>()));
 }
