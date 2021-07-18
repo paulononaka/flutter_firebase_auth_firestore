@@ -17,6 +17,7 @@
     "tests": "npm run lint"
   },
   "dependencies": {
+    "@nestjs/cli": "^7.0.0",
     "@nestjs/common": "^7.6.18",
     "@nestjs/config": "^0.5.0",
     "@nestjs/core": "^7.6.18",
@@ -25,7 +26,6 @@
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
-    "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@types/node": "^14.0.6",
     "@typescript-eslint/eslint-plugin": "^3.0.2",
