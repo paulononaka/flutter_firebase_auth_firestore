@@ -14,7 +14,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
-    yield* event.when(tapOnSignUp: _tapOnSignUp);
+    yield* event.when(tapOnSignUp: _tapOnSignUp, tapOnSignIn: _tapOnSignIn);
   }
 
   Stream<SignUpState> _tapOnSignUp(
@@ -22,12 +22,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     try {
       yield const SignUpState.loading();
       await authManager.signUp(email: email, password: password);
-      await navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
+      navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
       yield const SignUpState.loaded();
     } on AuthException catch (e) {
       yield SignUpState.error(e.message);
     } catch (e) {
       yield const SignUpState.error('An unknown error happened :(');
     }
+  }
+
+  Stream<SignUpState> _tapOnSignIn(NavigatorState navigatorState) async* {
+    navigatorState.pushReplacementNamed(Routes.signIn);
   }
 }

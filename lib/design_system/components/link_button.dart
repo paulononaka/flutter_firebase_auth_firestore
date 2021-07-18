@@ -25,7 +25,6 @@ class LinkButton extends StatelessWidget {
           Text(text,
               style: TextStyle(
                 color: textColor,
-                fontWeight: FontWeight.bold,
                 fontSize: 19.00,
               )),
           if (boldText != null)

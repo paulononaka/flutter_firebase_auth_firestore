@@ -71,9 +71,12 @@ class _SignInPageState extends State<SignInPage> {
               if (errorMessage != null)
                 Text(errorMessage, style: const TextStyle(color: Colors.red)),
               SizedBox(height: size.height * 0.03),
-              const LinkButton(
+              LinkButton(
                 text: 'Don’t have an Account ? ',
                 boldText: 'Sign Up',
+                onPressed: () => widget.bloc.add(
+                  SignInEvent.tapOnSignUp(navigatorState: Navigator.of(context)),
+                ),
               ),
             ],
           ),

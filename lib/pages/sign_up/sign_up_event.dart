@@ -10,4 +10,8 @@ class SignUpEvent with _$SignUpEvent {
     required final String email,
     required final String password,
   }) = _TapOnSignUp;
+
+  const factory SignUpEvent.tapOnSignIn({
+    required final NavigatorState navigatorState,
+  }) = _TapOnSignIn;
 }
