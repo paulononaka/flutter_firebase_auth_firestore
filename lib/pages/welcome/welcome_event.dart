@@ -6,4 +6,5 @@ part 'welcome_event.freezed.dart';
 @freezed
 class WelcomeEvent with _$WelcomeEvent {
   const factory WelcomeEvent.tapOnSignUp(NavigatorState navigatorState) = _TapOnSignUp;
+  const factory WelcomeEvent.tapOnSignIn(NavigatorState navigatorState) = _TapOnSignIn;
 }

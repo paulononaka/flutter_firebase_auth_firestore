@@ -6,25 +6,25 @@ import 'package:flutter_firebase_auth_firestore/design_system/components/rounded
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
-import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart';
 
-import 'sign_up_bloc.dart';
-import 'sign_up_event.dart';
-import 'sign_up_state.dart';
+import 'sign_in_bloc.dart';
+import 'sign_in_event.dart';
+import 'sign_in_state.dart';
 
-class SignUpPage extends StatefulWidget {
-  SignUpPage({
+class SignInPage extends StatefulWidget {
+  SignInPage({
     required this.bloc,
     final Key? key,
   }) : super(key: key);
 
-  final SignUpBloc bloc;
+  final SignInBloc bloc;
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => widget.bloc,
-      child: BlocBuilder<SignUpBloc, SignUpState>(
+      child: BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state) => state.when(
           loading: () => loading(context),
           loaded: () => loaded(context: context),
@@ -62,15 +62,15 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text("SIGNUP", style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text("LOGIN", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: size.height * 0.03),
-              SizedBox(height: size.height * 0.35, child: Images.signup),
+              SizedBox(height: size.height * 0.35, child: Images.signin),
               RoundedInputField(hintText: "Your Email", controller: emailController),
               RoundedPasswordField(controller: passwordController),
               RoundedButton(
-                text: "SIGNUP",
+                text: "LOGIN",
                 onPressed: () => widget.bloc.add(
-                  SignUpEvent.tapOnSignUp(
+                  SignInEvent.tapOnSignIn(
                     navigatorState: Navigator.of(context),
                     email: emailController.text,
                     password: passwordController.text,
@@ -81,8 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 Text(errorMessage, style: const TextStyle(color: Colors.red)),
               SizedBox(height: size.height * 0.03),
               const LinkButton(
-                text: 'Already have an Account ? ',
-                boldText: 'Sign In',
+                text: 'Don’t have an Account ? ',
+                boldText: 'Sign Up',
               ),
             ],
           ),

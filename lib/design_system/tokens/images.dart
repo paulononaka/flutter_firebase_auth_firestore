@@ -6,6 +6,7 @@ class Images {
 
   static final welcome = SvgPicture.asset("assets/icons/chat.svg");
   static final signup = SvgPicture.asset("assets/icons/signup.svg");
+  static final signin = SvgPicture.asset("assets/icons/login.svg");
   static final mainTop = Image.asset("assets/images/main_top.png");
   static final mainBottom = Image.asset("assets/images/main_bottom.png");
 }

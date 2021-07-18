@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +10,7 @@ import 'package:get_it/get_it.dart';
 class Routes {
   static const welcome = 'welcome';
   static const signUp = 'sign_up';
+  static const signIn = 'sign_in';
   static const home = 'home';
 }
 
@@ -28,6 +30,9 @@ class AppNavigator extends StatelessWidget {
         switch (settings.name) {
           case Routes.welcome:
             builder = (BuildContext _) => getIt.get<WelcomePage>();
+            break;
+          case Routes.signIn:
+            builder = (BuildContext _) => getIt.get<SignInPage>();
             break;
           case Routes.signUp:
             builder = (BuildContext _) => getIt.get<SignUpPage>();
