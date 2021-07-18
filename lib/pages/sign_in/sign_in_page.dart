@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/link_button.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
@@ -35,19 +36,9 @@ class _SignInPageState extends State<SignInPage> {
       create: (_) => widget.bloc,
       child: BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state) => state.when(
-          loading: () => loading(context),
+          loading: () => const Loading(),
           loaded: () => loaded(context: context),
           error: (message) => loaded(context: context, errorMessage: message),
-        ),
-      ),
-    );
-  }
-
-  Widget loading(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
         ),
       ),
     );

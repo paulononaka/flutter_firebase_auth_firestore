@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 
 import 'home_bloc.dart';
@@ -18,18 +19,8 @@ class HomePage extends StatelessWidget {
       create: (_) => bloc,
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) => state.when(
-          loading: () => loading(context),
+          loading: () => const Loading(),
           loaded: () => loaded(context),
-        ),
-      ),
-    );
-  }
-
-  Widget loading(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
         ),
       ),
     );
