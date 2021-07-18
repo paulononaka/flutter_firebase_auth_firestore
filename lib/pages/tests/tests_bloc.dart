@@ -17,12 +17,11 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
     yield* event.when(tapOnTests: _tapOnTests, tapOnSignUp: _tapOnSignUp);
   }
 
-  Stream<TestsState> _tapOnTests(
-      NavigatorState navigatorState, String email, String password) async* {
+  Stream<TestsState> _tapOnTests(NavigatorState navigator, String email, String password) async* {
     try {
       yield const TestsState.loading();
       await auth.signIn(email: email, password: password);
-      navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
+      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield TestsState.error(e.message);
     } catch (e) {
@@ -30,7 +29,7 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
     }
   }
 
-  Stream<TestsState> _tapOnSignUp(NavigatorState navigatorState) async* {
-    navigatorState.pushReplacementNamed(Routes.signUp);
+  Stream<TestsState> _tapOnSignUp(NavigatorState navigator) async* {
+    navigator.pushReplacementNamed(Routes.signUp);
   }
 }

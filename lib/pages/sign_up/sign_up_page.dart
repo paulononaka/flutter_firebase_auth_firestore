@@ -9,7 +9,7 @@ import 'package:flutter_firebase_auth_firestore/design_system/components/rounded
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_password_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
-import 'package:flutter_firebase_auth_firestore/models/user.dart';
+import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 
 import 'sign_up_bloc.dart';
@@ -63,19 +63,38 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: size.height * 0.15, child: Images.signup),
-              RoundedInputField(hint: "Your Email", controller: emailController),
-              RoundedPasswordField(controller: passwordController),
-              RoundedInputField(hint: "Your Name", controller: nameController),
-              DateSelectorField(hint: "Date Of Birth", onChanged: (value) => dateOfBirth = value),
-              DropdownField(list: _genderList, onChanged: (value) => selectedGender = value),
-              DropdownField(list: _genitaliaList, onChanged: (value) => selectedGenitalia = value),
+              RoundedInputField(
+                hint: "Your Email",
+                controller: emailController,
+              ),
+              RoundedPasswordField(
+                controller: passwordController,
+              ),
+              RoundedInputField(
+                hint: "Your Name",
+                controller: nameController,
+              ),
+              DateSelectorField(
+                hint: "Date Of Birth",
+                onChanged: (value) => dateOfBirth = value,
+              ),
+              DropdownField(
+                hint: 'Gender',
+                list: _genderList,
+                onChanged: (value) => selectedGender = value,
+              ),
+              DropdownField(
+                hint: 'Genitalia',
+                list: _genitaliaList,
+                onChanged: (value) => selectedGenitalia = value,
+              ),
               RoundedButton(
                 text: "SIGNUP",
                 onPressed: () => widget.bloc.add(
                   SignUpEvent.tapOnSignUp(
-                    navigatorState: Navigator.of(context),
+                    navigator: Navigator.of(context),
                     password: passwordController.text,
-                    user: User(
+                    user: FlutfireUser(
                         email: emailController.text,
                         name: nameController.text,
                         dateOfBith: dateOfBirth,
@@ -90,7 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 text: 'Already have an Account ? ',
                 boldText: 'Sign In',
                 onPressed: () => widget.bloc.add(
-                  SignUpEvent.tapOnSignIn(navigatorState: Navigator.of(context)),
+                  SignUpEvent.tapOnSignIn(navigator: Navigator.of(context)),
                 ),
               ),
             ],

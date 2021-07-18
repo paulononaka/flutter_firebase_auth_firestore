@@ -5,13 +5,11 @@ part 'profile_event.freezed.dart';
 
 @freezed
 class ProfileEvent with _$ProfileEvent {
-  const factory ProfileEvent.tapOnProfile({
-    required final NavigatorState navigatorState,
-    required final String email,
-    required final String password,
-  }) = _TapOnProfile;
+  const factory ProfileEvent.tapOnUpdate({
+    required final NavigatorState navigator,
+    required final String name,
+    required final bool notificationsEnabled,
+  }) = _TapOnUpdate;
 
-  const factory ProfileEvent.tapOnSignUp({
-    required final NavigatorState navigatorState,
-  }) = _TapOnSignUp;
+  const factory ProfileEvent.fetchUser() = _fetchUser;
 }

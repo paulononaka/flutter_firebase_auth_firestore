@@ -1,18 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'flutfire_user.freezed.dart';
+part 'flutfire_user.g.dart';
 
 @freezed
-class User with _$User {
+class FlutfireUser with _$FlutfireUser {
   @JsonSerializable(explicitToJson: true)
-  factory User({
+  factory FlutfireUser({
     required String email,
     required String name,
     required DateTime dateOfBith,
     required String gender,
     required String genitalia,
-  }) = _User;
+  }) = _FlutfireUser;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory FlutfireUser.fromJson(Map<String, dynamic> json) => _$FlutfireUserFromJson(json);
 }

@@ -17,12 +17,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     yield* event.when(tapOnOrder: _tapOnOrder, tapOnSignUp: _tapOnSignUp);
   }
 
-  Stream<OrderState> _tapOnOrder(
-      NavigatorState navigatorState, String email, String password) async* {
+  Stream<OrderState> _tapOnOrder(NavigatorState navigator, String email, String password) async* {
     try {
       yield const OrderState.loading();
       await auth.signIn(email: email, password: password);
-      navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
+      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield OrderState.error(e.message);
     } catch (e) {
@@ -30,7 +29,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     }
   }
 
-  Stream<OrderState> _tapOnSignUp(NavigatorState navigatorState) async* {
-    navigatorState.pushReplacementNamed(Routes.signUp);
+  Stream<OrderState> _tapOnSignUp(NavigatorState navigator) async* {
+    navigator.pushReplacementNamed(Routes.signUp);
   }
 }

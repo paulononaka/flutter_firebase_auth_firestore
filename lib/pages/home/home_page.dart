@@ -47,19 +47,19 @@ class HomePage extends StatelessWidget {
             RoundedButton(
               text: "Order a new test kit",
               onPressed: () => bloc.add(
-                HomeEvent.tapOnOrder(navigatorState: Navigator.of(context)),
+                HomeEvent.tapOnOrder(navigator: Navigator.of(context)),
               ),
             ),
             RoundedButton(
               text: "Tests",
               onPressed: () => bloc.add(
-                HomeEvent.tapOnTests(navigatorState: Navigator.of(context)),
+                HomeEvent.tapOnTests(navigator: Navigator.of(context)),
               ),
             ),
             RoundedButton(
-              text: "My Profile",
+              text: "My profile",
               onPressed: () => bloc.add(
-                HomeEvent.tapOnProfile(navigatorState: Navigator.of(context)),
+                HomeEvent.tapOnProfile(navigator: Navigator.of(context)),
               ),
             ),
           ],

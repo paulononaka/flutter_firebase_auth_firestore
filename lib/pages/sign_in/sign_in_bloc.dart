@@ -17,12 +17,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     yield* event.when(tapOnSignIn: _tapOnSignIn, tapOnSignUp: _tapOnSignUp);
   }
 
-  Stream<SignInState> _tapOnSignIn(
-      NavigatorState navigatorState, String email, String password) async* {
+  Stream<SignInState> _tapOnSignIn(NavigatorState navigator, String email, String password) async* {
     try {
       yield const SignInState.loading();
       await auth.signIn(email: email, password: password);
-      navigatorState.pushNamedAndRemoveUntil(Routes.home, (_) => false);
+      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } on AuthException catch (e) {
       yield SignInState.error(e.message);
     } catch (e) {
@@ -30,7 +29,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     }
   }
 
-  Stream<SignInState> _tapOnSignUp(NavigatorState navigatorState) async* {
-    navigatorState.pushReplacementNamed(Routes.signUp);
+  Stream<SignInState> _tapOnSignUp(NavigatorState navigator) async* {
+    navigator.pushReplacementNamed(Routes.signUp);
   }
 }

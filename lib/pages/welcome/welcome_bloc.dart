@@ -14,11 +14,11 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
     yield* event.when(tapOnSignUp: _tapOnSignUp, tapOnSignIn: _tapOnSignIn);
   }
 
-  Stream<WelcomeState> _tapOnSignUp(NavigatorState navigatorState) async* {
-    navigatorState.pushNamed(Routes.signUp);
+  Stream<WelcomeState> _tapOnSignUp(NavigatorState navigator) async* {
+    navigator.pushNamed(Routes.signUp);
   }
 
-  Stream<WelcomeState> _tapOnSignIn(NavigatorState navigatorState) async* {
-    navigatorState.pushNamed(Routes.signIn);
+  Stream<WelcomeState> _tapOnSignIn(NavigatorState navigator) async* {
+    navigator.pushNamed(Routes.signIn);
   }
 }

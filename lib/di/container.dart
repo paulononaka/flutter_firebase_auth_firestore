@@ -10,7 +10,6 @@ import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart'
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
-import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_bloc.dart';
@@ -33,8 +32,7 @@ void setup() {
   getIt.registerFactory<SignInPage>(() => SignInPage(bloc: GetIt.I.get<SignInBloc>()));
 
   // Sign Up
-  getIt.registerFactory<SignUpRepository>(() => SignUpRepository(auth: GetIt.I.get<AuthManager>()));
-  getIt.registerFactory<SignUpBloc>(() => SignUpBloc(repository: GetIt.I.get<SignUpRepository>()));
+  getIt.registerFactory<SignUpBloc>(() => SignUpBloc(auth: GetIt.I.get<AuthManager>()));
   getIt.registerFactory<SignUpPage>(() => SignUpPage(bloc: GetIt.I.get<SignUpBloc>()));
 
   // Home

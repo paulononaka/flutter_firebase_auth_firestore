@@ -62,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
                 text: "LOGIN",
                 onPressed: () => widget.bloc.add(
                   SignInEvent.tapOnSignIn(
-                    navigatorState: Navigator.of(context),
+                    navigator: Navigator.of(context),
                     email: emailController.text,
                     password: passwordController.text,
                   ),
@@ -74,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
                 text: 'Don’t have an Account ? ',
                 boldText: 'Sign Up',
                 onPressed: () => widget.bloc.add(
-                  SignInEvent.tapOnSignUp(navigatorState: Navigator.of(context)),
+                  SignInEvent.tapOnSignUp(navigator: Navigator.of(context)),
                 ),
               ),
             ],

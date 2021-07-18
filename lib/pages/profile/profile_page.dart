@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/dropdown_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_input_field.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
+import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_bloc.dart';
 
 import 'profile_bloc.dart';
+import 'profile_event.dart';
 import 'profile_state.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -24,6 +29,11 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+
+  DateTime dateOfBirth = DateTime.now();
+  String selectedGender = '';
+  bool notificationsEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,37 +41,58 @@ class _ProfilePageState extends State<ProfilePage> {
       create: (_) => widget.bloc,
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) => state.when(
-          loading: () => const Loading(),
-          loaded: () => loaded(context: context),
+          loading: () => loading(),
+          loaded: (user) => loaded(context: context, user: user),
           error: (message) => loaded(context: context, errorMessage: message),
         ),
       ),
     );
   }
 
-  Widget loaded({required BuildContext context, String? errorMessage}) {
+  Widget loading() {
+    widget.bloc.add(const ProfileEvent.fetchUser());
+    return const Loading();
+  }
+
+  Widget loaded({required BuildContext context, FlutfireUser? user, String? errorMessage}) {
     Size size = MediaQuery.of(context).size;
+    if (user != null) {
+      nameController.text = user.name;
+    }
     return FlutfireScaffold(
+      title: 'My profile',
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
-                "The next profile should be made in 01-10-2020",
-                style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(height: size.height * 0.35, child: Images.profile),
+              RoundedInputField(hint: "Your name", controller: nameController),
+              DropdownField(
+                  hint: 'Enable notifications',
+                  list: _notificationsEnabled,
+                  onChanged: (value) => notificationsEnabled = value != 'No'),
+              RoundedButton(
+                text: "Update",
+                onPressed: () => widget.bloc.add(
+                  ProfileEvent.tapOnUpdate(
+                    navigator: Navigator.of(context),
+                    name: nameController.text,
+                    notificationsEnabled: notificationsEnabled,
+                  ),
+                ),
               ),
-              SizedBox(height: size.height * 0.03),
-              const Text("Profile a new test kit", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: size.height * 0.03),
-              SizedBox(height: size.height * 0.35, child: Images.signin),
+              if (errorMessage != null)
+                Text(errorMessage, style: const TextStyle(color: Colors.red)),
             ],
           ),
         ),
       ),
     );
   }
+
+  List<String> get _notificationsEnabled => ['Yes', 'No'];
 
   @override
   void dispose() {

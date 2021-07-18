@@ -1,18 +1,29 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
 
 class AuthManager {
-  AuthManager() : _firebaseAuth = FirebaseAuth.instance;
+  AuthManager()
+      : _auth = FirebaseAuth.instance,
+        _firestore = FirebaseFirestore.instance;
 
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth _auth;
+  final FirebaseFirestore _firestore;
   final _logoutController = StreamController<bool>.broadcast();
 
-  bool get isLoggedIn => _firebaseAuth.currentUser != null;
+  bool get isLoggedIn => _auth.currentUser != null;
 
-  Future<void> signUp({required final String email, required final String password}) async {
+  Future<void> signUp({required FlutfireUser user, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: user.email, password: password);
+      try {
+        await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
+      } catch (e) {
+        await _auth.currentUser?.delete();
+        rethrow;
+      }
     } on FirebaseAuthException catch (e) {
       if (e.message != null) {
         throw AuthException(e, e.message!);
@@ -26,7 +37,7 @@ class AuthManager {
 
   Future<void> signIn({required final String email, required final String password}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.message != null) {
         throw AuthException(e, e.message!);
@@ -38,22 +49,34 @@ class AuthManager {
     }
   }
 
-  Future<void> deleteCurrentUser() async {
+  Future<void> update({required String name}) async {
     try {
-      await _firebaseAuth.currentUser?.delete();
-    } on FirebaseAuthException catch (e) {
-      if (e.message != null) {
-        throw AuthException(e, e.message!);
-      } else {
-        rethrow;
-      }
+      var user = await currentUser();
+      user = user.copyWith(name: name);
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
     } catch (e) {
-      throw AuthException(e, 'An unknown error happened when deleting the user :(');
+      throw AuthException(e, 'An unknown error happened when updating user :(');
+    }
+  }
+
+  Future<FlutfireUser> currentUser() async {
+    try {
+      return await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .withConverter<FlutfireUser>(
+            fromFirestore: (snapshot, _) => FlutfireUser.fromJson(snapshot.data()!),
+            toFirestore: (movie, _) => movie.toJson(),
+          )
+          .get()
+          .then((snapshot) => snapshot.data()!);
+    } catch (e) {
+      throw AuthException(e, 'An unknown error happened when updating user :(');
     }
   }
 
   Future<void> logout() async {
-    await _firebaseAuth.signOut();
+    await _auth.signOut();
     _logoutController.add(true);
   }
 

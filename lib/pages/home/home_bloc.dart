@@ -27,15 +27,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     auth.logout();
   }
 
-  Stream<HomeState> _tapOnOrder(NavigatorState navigatorState) async* {
-    navigatorState.pushNamed(Routes.order);
+  Stream<HomeState> _tapOnOrder(NavigatorState navigator) async* {
+    navigator.pushNamed(Routes.order);
   }
 
-  Stream<HomeState> _tapOnTests(NavigatorState navigatorState) async* {
-    navigatorState.pushNamed(Routes.tests);
+  Stream<HomeState> _tapOnTests(NavigatorState navigator) async* {
+    navigator.pushNamed(Routes.tests);
   }
 
-  Stream<HomeState> _tapOnProfile(NavigatorState navigatorState) async* {
-    navigatorState.pushNamed(Routes.profile);
+  Stream<HomeState> _tapOnProfile(NavigatorState navigator) async* {
+    navigator.pushNamed(Routes.profile);
   }
 }

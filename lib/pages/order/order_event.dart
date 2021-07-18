@@ -6,12 +6,12 @@ part 'order_event.freezed.dart';
 @freezed
 class OrderEvent with _$OrderEvent {
   const factory OrderEvent.tapOnOrder({
-    required final NavigatorState navigatorState,
+    required final NavigatorState navigator,
     required final String email,
     required final String password,
   }) = _TapOnOrder;
 
   const factory OrderEvent.tapOnSignUp({
-    required final NavigatorState navigatorState,
+    required final NavigatorState navigator,
   }) = _TapOnSignUp;
 }
