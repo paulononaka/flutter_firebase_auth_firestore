@@ -5,7 +5,6 @@ import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart
 import 'link_button.dart';
 
 class FlutfireScaffold extends StatelessWidget {
-  final Widget child;
   const FlutfireScaffold({
     Key? key,
     required this.child,
@@ -14,6 +13,7 @@ class FlutfireScaffold extends StatelessWidget {
     this.logoutOnPressed,
   }) : super(key: key);
 
+  final Widget child;
   final bool hasBackButton;
   final VoidCallback? logoutOnPressed;
   final String? title;

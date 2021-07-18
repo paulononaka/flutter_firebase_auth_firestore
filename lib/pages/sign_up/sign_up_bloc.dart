@@ -18,7 +18,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Stream<SignUpState> _tapOnSignUp(
-      NavigatorState navigatorState, String email, String password) async* {
+    NavigatorState navigatorState,
+    String email,
+    String password,
+    String name,
+    DateTime dateOfBith,
+    String gender,
+    String genitalia,
+  ) async* {
     try {
       yield const SignUpState.loading();
       await authManager.signUp(email: email, password: password);

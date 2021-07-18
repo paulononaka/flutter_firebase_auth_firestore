@@ -56,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
               const Text("LOGIN", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: size.height * 0.03),
               SizedBox(height: size.height * 0.35, child: Images.signin),
-              RoundedInputField(hintText: "Your Email", controller: emailController),
+              RoundedInputField(hint: "Your Email", controller: emailController),
               RoundedPasswordField(controller: passwordController),
               RoundedButton(
                 text: "LOGIN",
@@ -70,7 +70,6 @@ class _SignInPageState extends State<SignInPage> {
               ),
               if (errorMessage != null)
                 Text(errorMessage, style: const TextStyle(color: Colors.red)),
-              SizedBox(height: size.height * 0.03),
               LinkButton(
                 text: 'Don’t have an Account ? ',
                 boldText: 'Sign Up',

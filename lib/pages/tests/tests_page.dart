@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
-import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/text_theme.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
 
@@ -22,7 +21,6 @@ class TestsPage extends StatefulWidget {
 }
 
 class _TestsPageState extends State<TestsPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
