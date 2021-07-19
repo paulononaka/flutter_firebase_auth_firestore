@@ -9,23 +9,34 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "nest start",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "tests": "npm run lint"
+    "tests": "npm run lint",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
+  "engines": {
+    "node": "14"
+  },
+  "main": "dist/index.js",
   "dependencies": {
-    "@nestjs/cli": "^7.0.0",
+    "@google-cloud/firestore": "^4.13.2",
     "@nestjs/common": "^7.6.18",
     "@nestjs/config": "^0.5.0",
     "@nestjs/core": "^7.6.18",
-    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/platform-express": "^7.6.18",
+    "firebase-admin": "^9.11.0",
+    "firebase-functions": "^3.14.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
+    "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@types/node": "^14.0.6",
     "@typescript-eslint/eslint-plugin": "^3.0.2",

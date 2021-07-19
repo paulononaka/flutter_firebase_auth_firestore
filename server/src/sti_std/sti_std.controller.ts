@@ -4,10 +4,10 @@ import { StiStd } from './sti_std';
 
 @Controller('sti_std')
 export class StiStdController {
-  constructor(private readonly stiStdService: StiStdService) {}
+  constructor(private readonly stiStdService: StiStdService) { }
 
   @Get()
   async findAll(): Promise<StiStd[]> {
-    return this.stiStdService.findAll();
+    return await this.stiStdService.findAll();
   }
 }

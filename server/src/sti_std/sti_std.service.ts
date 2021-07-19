@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { StiStd } from './sti_std';
+import { StiStdRepository } from './sti_std.repository';
 
 @Injectable()
 export class StiStdService {
+  constructor(private readonly stiStdRepository: StiStdRepository) { }
+
   async findAll(): Promise<StiStd[]> {
-    return [
-      new StiStd('Chlamydia'),
-      new StiStd('Gonorrhea'),
-      new StiStd('Genital herpes'),
-      new StiStd('Syphilis'),
-      new StiStd('HPV'),
-      new StiStd('Trichomoniasis'),
-    ];
+    return this.stiStdRepository.findAll();
   }
 }
