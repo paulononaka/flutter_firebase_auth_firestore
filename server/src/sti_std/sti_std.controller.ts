@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { StiStdService } from './sti_std.service';
 import { StiStd } from './sti_std';
 
@@ -6,8 +6,8 @@ import { StiStd } from './sti_std';
 export class StiStdController {
   constructor(private readonly stiStdService: StiStdService) { }
 
-  @Get()
-  async findAll(): Promise<StiStd[]> {
-    return await this.stiStdService.findAll();
+  @Get(':genitalia')
+  async findAll(@Param() params): Promise<StiStd[]> {
+    return await this.stiStdService.findAll(params.genitalia);
   }
 }
