@@ -12,4 +12,5 @@ class Images {
   static final empty = SvgPicture.asset("assets/icons/empty.svg");
   static final healthy = SvgPicture.asset("assets/icons/happy.svg");
   static final profile = SvgPicture.asset("assets/icons/profile.svg");
+  static final error = SvgPicture.asset("assets/icons/error.svg");
 }

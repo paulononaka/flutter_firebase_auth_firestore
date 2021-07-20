@@ -19,6 +19,12 @@
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/server",
             "protocol": "inspector"
+        },
+        {
+            "name": "Debug App",
+            "request": "launch",
+            "type": "dart",
+            "program": "app/lib/main.dart",
         }
     ]
 }

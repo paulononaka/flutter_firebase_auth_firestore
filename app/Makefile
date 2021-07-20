@@ -1,5 +1,5 @@
 # ==================================================================================================
-# Setup and code generation
+# Setup
 # ==================================================================================================
 
 clean-codegen:
@@ -35,7 +35,7 @@ watch:
 codegen:
 	flutter packages pub run build_runner build --delete-conflicting-outputs
 
-get-packages:
+get:
 	flutter pub get
 
 install: get-packages codegen
@@ -66,11 +66,11 @@ lint:
 	flutter analyze
 
 # ==================================================================================================
-# Build and upload
+# Build
 # ==================================================================================================
 
 build-android:
-	flutter build apk -t lib/main.dart
+	flutter build apk -t lib/main_prod.dart
 
 build-ios:
-	flutter build ios -t lib/main_dev.dart
+	flutter build ios -t lib/main_prod.dart

@@ -5,16 +5,32 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'order_event.dart';
+import 'order_repository.dart';
 import 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc({required this.auth}) : super(const OrderState.loaded());
+  OrderBloc({required this.auth, required this.repository}) : super(const OrderState.loading());
 
   final AuthManager auth;
+  final OrderRepository repository;
 
   @override
   Stream<OrderState> mapEventToState(OrderEvent event) async* {
-    yield* event.when(tapOnOrder: _tapOnOrder, tapOnSignUp: _tapOnSignUp);
+    yield* event.when(
+      tapOnOrder: _tapOnOrder,
+      tapOnSignUp: _tapOnSignUp,
+      fetchStiStdList: _fetchStiStdList,
+    );
+  }
+
+  Stream<OrderState> _fetchStiStdList() async* {
+    try {
+      var user = await auth.currentUser();
+      final list = await repository.fetchStiStd(user.genitalia);
+      yield OrderState.loaded(list);
+    } catch (e) {
+      yield const OrderState.error('An unknown error happened :(');
+    }
   }
 
   Stream<OrderState> _tapOnOrder(NavigatorState navigator, String email, String password) async* {
