@@ -11,3 +11,11 @@ export class StiStd {
     this.duration = duration;
   }
 }
+
+export class StiStdList {
+  stiStdList: StiStd[];
+
+  constructor(stiStdList: StiStd[]) {
+    this.stiStdList = stiStdList;
+  }
+}

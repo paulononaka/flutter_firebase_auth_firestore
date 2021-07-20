@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { StiStd } from './sti_std';
-import { StiStdRepository } from './sti_std.repository';
-
+import * as admin from 'firebase-admin';
+import { StiStdList } from './sti_std.models';
 @Injectable()
 export class StiStdService {
-  constructor(private readonly stiStdRepository: StiStdRepository) { }
 
-  async findAll(genitalia: String): Promise<StiStd[]> {
-    return this.stiStdRepository.findAll(genitalia);
+  async findAll(genitalia: string): Promise<StiStdList> {
+    const stiStdList = [];
+    const snapshot = await admin.firestore().collection('sti_std').where('genitalia', 'array-contains', genitalia).get();
+    snapshot.forEach((doc) => stiStdList.push(doc.data()));
+    return new StiStdList(stiStdList);
   }
 }
