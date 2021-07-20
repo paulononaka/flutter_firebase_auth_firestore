@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'order_event.freezed.dart';
@@ -7,11 +8,8 @@ part 'order_event.freezed.dart';
 class OrderEvent with _$OrderEvent {
   const factory OrderEvent.fetchStiStdList() = _FetchStiStdList;
 
-  const factory OrderEvent.tapOnSignUp({required final NavigatorState navigator}) = _TapOnSignUp;
-
-  const factory OrderEvent.tapOnOrder({
+  const factory OrderEvent.tapOnTest({
     required final NavigatorState navigator,
-    required final String email,
-    required final String password,
-  }) = _TapOnOrder;
+    required final StiStd stiStd,
+  }) = _TapOnTest;
 }

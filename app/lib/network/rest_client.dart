@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 
 class Endpoint {
   static String stiStd(final String genitalia) => '/sti_std/${genitalia.toLowerCase()}';
+  static String order() => '/order';
 }
 
 class RestClient {

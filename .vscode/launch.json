@@ -21,10 +21,16 @@
             "protocol": "inspector"
         },
         {
-            "name": "Debug App",
+            "name": "Debug app prod",
             "request": "launch",
             "type": "dart",
-            "program": "app/lib/main.dart",
+            "program": "app/lib/main_prod.dart",
+        },
+        {
+            "name": "Debug app local",
+            "request": "launch",
+            "type": "dart",
+            "program": "app/lib/main_local.dart",
         }
     ]
 }

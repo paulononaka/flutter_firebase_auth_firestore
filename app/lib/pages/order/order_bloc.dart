@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
-import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
+import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
 import 'order_event.dart';
 import 'order_repository.dart';
 import 'order_state.dart';
@@ -17,9 +17,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   @override
   Stream<OrderState> mapEventToState(OrderEvent event) async* {
     yield* event.when(
-      tapOnOrder: _tapOnOrder,
-      tapOnSignUp: _tapOnSignUp,
       fetchStiStdList: _fetchStiStdList,
+      tapOnTest: _tapOnTest,
     );
   }
 
@@ -33,19 +32,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     }
   }
 
-  Stream<OrderState> _tapOnOrder(NavigatorState navigator, String email, String password) async* {
+  Stream<OrderState> _tapOnTest(NavigatorState navigator, StiStd stiStd) async* {
     try {
       yield const OrderState.loading();
-      await auth.signIn(email: email, password: password);
-      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
-    } on AuthException catch (e) {
-      yield OrderState.error(e.message);
+      var user = await auth.currentUser();
+      await repository.saveOrder(user: user, stiStd: stiStd);
+      navigator.pop();
     } catch (e) {
       yield const OrderState.error('An unknown error happened :(');
     }
-  }
-
-  Stream<OrderState> _tapOnSignUp(NavigatorState navigator) async* {
-    navigator.pushReplacementNamed(Routes.signUp);
   }
 }

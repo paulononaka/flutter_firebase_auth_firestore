@@ -65,7 +65,8 @@ class AuthManager {
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .withConverter<FlutfireUser>(
-            fromFirestore: (snapshot, _) => FlutfireUser.fromJson(snapshot.data()!),
+            fromFirestore: (snapshot, _) =>
+                FlutfireUser.fromJson({'uid': _auth.currentUser!.uid, ...snapshot.data()!}),
             toFirestore: (movie, _) => movie.toJson(),
           )
           .get()

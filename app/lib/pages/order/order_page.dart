@@ -10,23 +10,15 @@ import 'order_bloc.dart';
 import 'order_event.dart';
 import 'order_state.dart';
 
-class OrderPage extends StatefulWidget {
+class OrderPage extends StatelessWidget {
   const OrderPage({required this.bloc, final Key? key}) : super(key: key);
 
   final OrderBloc bloc;
 
   @override
-  State<OrderPage> createState() => _OrderPageState();
-}
-
-class _OrderPageState extends State<OrderPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => widget.bloc,
+      create: (_) => bloc,
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) => state.when(
           loading: () => loading(),
@@ -38,7 +30,7 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   Widget loading() {
-    widget.bloc.add(const OrderEvent.fetchStiStdList());
+    bloc.add(const OrderEvent.fetchStiStdList());
     return const Loading();
   }
 
@@ -47,6 +39,10 @@ class _OrderPageState extends State<OrderPage> {
       child: SafeArea(
         child: Column(
           children: <Widget>[
+            const Text(
+              "The next order should be made until 01-10-2020",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             const Text(
               "Available tests",
             ),
@@ -60,13 +56,13 @@ class _OrderPageState extends State<OrderPage> {
                     trailing: const Icon(Icons.arrow_right),
                     title: Text(stiStdList.stiStdList[index].name),
                     subtitle: Text(stiStdList.stiStdList[index].information),
+                    onTap: () => bloc.add(OrderEvent.tapOnTest(
+                      navigator: Navigator.of(context),
+                      stiStd: stiStdList.stiStdList[index],
+                    )),
                   ),
                 ),
               ),
-            ),
-            const Text(
-              "The next order should be made until 01-10-2020",
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -88,12 +84,5 @@ class _OrderPageState extends State<OrderPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 }

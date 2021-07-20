@@ -7,6 +7,7 @@ part 'flutfire_user.g.dart';
 class FlutfireUser with _$FlutfireUser {
   @JsonSerializable(explicitToJson: true)
   factory FlutfireUser({
+    String? uid,
     required String email,
     required String name,
     required DateTime dateOfBith,
