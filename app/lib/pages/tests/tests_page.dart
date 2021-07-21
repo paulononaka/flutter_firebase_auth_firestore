@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/server_error.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/text_theme.dart';
 import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/extensions/date_extension.dart';
 
 import 'tests_bloc.dart';
 import 'tests_event.dart';
@@ -44,29 +46,32 @@ class TestsPage extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            const Text(
-              "All ordered tests",
-              style: TextStyles.headline3,
-            ),
+            if (list.isEmpty)
+              const Text("You haven't ordered any test kit yet", style: TextStyles.headline1)
+            else
+              const Text("All ordered tests", style: TextStyles.headline1),
             SizedBox(height: size.height * 0.03),
-            Expanded(
-              child: ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (context, index) => Card(
-                  elevation: 2,
-                  margin: const EdgeInsets.all(10),
-                  child: ListTile(
-                    trailing: const Icon(Icons.arrow_right),
-                    title: Text(list[index].testName),
-                    subtitle: Text(list[index].createdAt),
-                    onTap: () => bloc.add(TestsEvent.tapOnTest(
-                      navigator: Navigator.of(context),
-                      order: list[index],
-                    )),
+            if (list.isEmpty)
+              SizedBox(height: size.height * 0.5, child: Images.empty)
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, index) => Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.all(10),
+                    child: ListTile(
+                      trailing: const Icon(Icons.arrow_right),
+                      title: Text(list[index].testName),
+                      subtitle: Text(list[index].createdAt.mMMMdyyyy),
+                      onTap: () => bloc.add(TestsEvent.tapOnTest(
+                        navigator: Navigator.of(context),
+                        order: list[index],
+                      )),
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
           ],
         ),
       ),

@@ -8,8 +8,8 @@ class Order with _$Order {
   factory Order({
     required String userUid,
     required String testName,
-    required String createdAt,
-    required String resultDate,
+    required DateTime createdAt,
+    required DateTime resultDate,
     required String result,
   }) = _Order;
 

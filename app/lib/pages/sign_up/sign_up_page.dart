@@ -33,6 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
 
   DateTime dateOfBirth = DateTime.now();
   String selectedGender = '';
@@ -64,24 +65,23 @@ class _SignUpPageState extends State<SignUpPage> {
             children: <Widget>[
               SizedBox(height: size.height * 0.15, child: Images.signup),
               RoundedInputField(
-                hint: "Your Email",
+                hint: "Email",
                 controller: emailController,
               ),
               RoundedPasswordField(
                 controller: passwordController,
               ),
               RoundedInputField(
-                hint: "Your Name",
+                hint: "Name",
                 controller: nameController,
               ),
               DateSelectorField(
                 hint: "Date Of Birth",
                 onChanged: (value) => dateOfBirth = value,
               ),
-              DropdownField(
-                hint: 'Gender',
-                list: _genderList,
-                onChanged: (value) => selectedGender = value,
+              RoundedInputField(
+                hint: "Gender",
+                controller: nameController,
               ),
               DropdownField(
                 hint: 'Genitalia',
@@ -121,29 +121,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   List<String> get _genitaliaList => ['Male', 'Female', 'Other'];
 
-  List<String> get _genderList {
-    return [
-      'Agender',
-      'Bigender',
-      'Cisgender',
-      'Gender Expression',
-      'Gender Fluid',
-      'Genderqueer',
-      'Intersex',
-      'Gender Variant',
-      'Mx.',
-      'Third Gender',
-      'Transgender',
-      'Two-Spirit',
-      'Ze / Hir',
-      'Other',
-    ];
-  }
-
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    genderController.dispose();
     super.dispose();
   }
 }

@@ -1,64 +1,116 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/rounded_button.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/server_error.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/images.dart';
-import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/models/order.dart';
+import 'package:flutter_firebase_auth_firestore/extensions/date_extension.dart';
 
 import 'home_bloc.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.bloc}) : super(key: key);
 
   final HomeBloc bloc;
 
   @override
+  State<HomePage> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> with WidgetsBindingObserver {
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => bloc,
+      create: (_) => widget.bloc,
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) => state.when(
-          loading: () => const Loading(),
-          loaded: () => loaded(context),
+          loading: () => loading(),
+          loaded: (mostRecent) => loaded(context, mostRecent),
+          error: (message) => ServerError(errorMessage: message),
         ),
       ),
     );
   }
 
-  Widget loaded(BuildContext context) {
+  Widget loading() {
+    widget.bloc.add(const HomeEvent.loadHome());
+    return const Loading();
+  }
+
+  Widget loaded(BuildContext context, List<Order> mostRecent) {
     Size size = MediaQuery.of(context).size;
     return FlutfireScaffold(
       title: 'Flut Fire',
-      logoutOnPressed: () => bloc.add(const HomeEvent.logout()),
+      logoutOnPressed: () => widget.bloc.add(const HomeEvent.logout()),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: size.height * 0.03),
-            const Text("There is no recent orders", style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: size.height * 0.2, child: Images.empty),
+            if (mostRecent.isEmpty)
+              Column(
+                children: [
+                  const Text("There is no recent orders",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: size.height * 0.2, child: Images.empty),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  const Text("Recent orders", style: TextStyle(fontWeight: FontWeight.bold)),
+                  CarouselSlider(
+                      options: CarouselOptions(
+                        height: 100,
+                        initialPage: 0,
+                        enableInfiniteScroll: false,
+                        reverse: false,
+                        enlargeCenterPage: true,
+                      ),
+                      items: mostRecent.map((order) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration:
+                                    const BoxDecoration(color: ColorPalette.primaryLightColor),
+                                child: ListTile(
+                                  trailing: const Icon(Icons.arrow_right),
+                                  title: Text(order.testName),
+                                  subtitle: Text(order.createdAt.mMMMdyyyy),
+                                  onTap: () => widget.bloc
+                                      .add(HomeEvent.tapOnTests(navigator: Navigator.of(context))),
+                                ));
+                          },
+                        );
+                      }).toList()),
+                ],
+              ),
             SizedBox(height: size.height * 0.03),
             const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: size.height * 0.2, child: Images.healthy),
             SizedBox(height: size.height * 0.03),
             RoundedButton(
-              text: "Order a new test kit",
-              onPressed: () => bloc.add(
+              text: "Order new test kit",
+              onPressed: () => widget.bloc.add(
                 HomeEvent.tapOnOrder(navigator: Navigator.of(context)),
               ),
             ),
             RoundedButton(
-              text: "Tests",
-              onPressed: () => bloc.add(
+              text: "All my tests",
+              onPressed: () => widget.bloc.add(
                 HomeEvent.tapOnTests(navigator: Navigator.of(context)),
               ),
             ),
             RoundedButton(
               text: "My profile",
-              onPressed: () => bloc.add(
+              onPressed: () => widget.bloc.add(
                 HomeEvent.tapOnProfile(navigator: Navigator.of(context)),
               ),
             ),
@@ -66,5 +118,26 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(final AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setState(() {
+        widget.bloc.add(const HomeEvent.loadHome());
+      });
+    }
   }
 }

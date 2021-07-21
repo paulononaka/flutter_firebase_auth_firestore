@@ -3,6 +3,7 @@ import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:flutter_firebase_auth_firestore/network/rest_client.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/home/home_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_repository.dart';
@@ -40,8 +41,12 @@ void setup({required String baseUrl}) {
   getIt.registerFactory<SignUpPage>(() => SignUpPage(bloc: GetIt.I.get<SignUpBloc>()));
 
   // Home
-  getIt.registerFactory<HomeBloc>(() => HomeBloc(auth: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<HomeRepository>(() => HomeRepository(rest: GetIt.I.get<RestClient>()));
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
+  getIt.registerFactory<HomeBloc>(() => HomeBloc(
+        auth: GetIt.I.get<AuthManager>(),
+        repository: GetIt.I.get<HomeRepository>(),
+      ));
 
   // Order
   getIt.registerFactory<OrderRepository>(() => OrderRepository(rest: GetIt.I.get<RestClient>()));

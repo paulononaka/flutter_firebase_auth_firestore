@@ -6,6 +6,7 @@ import 'package:flutter_firebase_auth_firestore/design_system/components/server_
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/text_theme.dart';
 import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/extensions/date_extension.dart';
 
 import 'order_bloc.dart';
 import 'order_event.dart';
@@ -40,8 +41,8 @@ class OrderPage extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: <Widget>[
-            const Text(
-              "The next order should be made until 01-10-2020",
+            Text(
+              "The next order should be made until ${DateTime.now().mMMMdyyyy}",
               style: TextStyles.bodyText1,
             ),
             const Text(
