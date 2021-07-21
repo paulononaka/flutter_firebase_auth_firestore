@@ -25,9 +25,14 @@ class RestClient {
     try {
       response = (payload == null)
           ? await get(Uri.parse(url))
-          : await post(Uri.parse(url), body: payload, encoding: _utf8);
+          : await post(Uri.parse(url),
+              body: payload, encoding: _utf8, headers: {'Content-Type': 'application/json'});
     } catch (exception) {
       throw ConnectionException(exception);
+    }
+
+    if (!(response.statusCode >= 200 && response.statusCode < 300)) {
+      throw ServerException('Server Error');
     }
 
     return response.body;
@@ -36,5 +41,10 @@ class RestClient {
 
 class ConnectionException implements Exception {
   ConnectionException(this.cause);
+  dynamic cause;
+}
+
+class ServerException implements Exception {
+  ServerException(this.cause);
   dynamic cause;
 }
