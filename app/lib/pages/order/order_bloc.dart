@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
-import 'package:flutter_firebase_auth_firestore/design_system/tokens/color_palette.dart';
 import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'order_event.dart';
@@ -28,8 +27,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Stream<OrderState> _fetchStiStdList() async* {
     try {
       var user = await auth.currentUser();
-      final list = await repository.fetchStiStd(user.genitalia);
-      yield OrderState.loaded(list);
+      final response = await repository.fetchStiStd(user.genitalia);
+      yield OrderState.loaded(response.stiStdList);
     } catch (e) {
       yield const OrderState.error('An unknown error happened :(');
     }

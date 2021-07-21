@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/flutfire_scaffold.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/components/loading.dart';
+import 'package:flutter_firebase_auth_firestore/design_system/components/server_error.dart';
 import 'package:flutter_firebase_auth_firestore/design_system/tokens/text_theme.dart';
+import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_bloc.dart';
 
 import 'tests_bloc.dart';
+import 'tests_event.dart';
 import 'tests_state.dart';
 
-class TestsPage extends StatefulWidget {
+class TestsPage extends StatelessWidget {
   const TestsPage({
     required this.bloc,
     final Key? key,
@@ -17,36 +20,25 @@ class TestsPage extends StatefulWidget {
   final TestsBloc bloc;
 
   @override
-  State<TestsPage> createState() => _TestsPageState();
-}
-
-class _TestsPageState extends State<TestsPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => widget.bloc,
+      create: (_) => bloc,
       child: BlocBuilder<TestsBloc, TestsState>(
         builder: (context, state) => state.when(
-          loading: () => const Loading(),
-          loaded: () => loaded(context: context),
-          error: (message) => loaded(context: context, errorMessage: message),
+          loading: () => loading(),
+          loaded: (list) => loaded(context: context, list: list),
+          error: (message) => ServerError(errorMessage: message),
         ),
       ),
     );
   }
 
-  final List dummyList = List.generate(20, (index) {
-    return {
-      "id": index,
-      "title": "This is the title $index",
-      "subtitle": "This is the subtitle $index"
-    };
-  });
+  Widget loading() {
+    bloc.add(const TestsEvent.fetchOrderList());
+    return const Loading();
+  }
 
-  Widget loaded({required BuildContext context, String? errorMessage}) {
+  Widget loaded({required BuildContext context, required List<Order> list}) {
     Size size = MediaQuery.of(context).size;
     return FlutfireScaffold(
       child: SafeArea(
@@ -54,23 +46,23 @@ class _TestsPageState extends State<TestsPage> {
           children: <Widget>[
             const Text(
               "All ordered tests",
-              style: TextStyles.headline1,
+              style: TextStyles.headline3,
             ),
             SizedBox(height: size.height * 0.03),
             Expanded(
               child: ListView.builder(
-                itemCount: dummyList.length,
+                itemCount: list.length,
                 itemBuilder: (context, index) => Card(
-                  elevation: 6,
+                  elevation: 2,
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      child: Text(dummyList[index]["id"].toString()),
-                      backgroundColor: Colors.purple,
-                    ),
-                    title: Text(dummyList[index]["title"]),
-                    subtitle: Text(dummyList[index]["subtitle"]),
-                    trailing: const Icon(Icons.add_a_photo),
+                    trailing: const Icon(Icons.arrow_right),
+                    title: Text(list[index].testName),
+                    subtitle: Text(list[index].createdAt),
+                    onTap: () => bloc.add(TestsEvent.tapOnTest(
+                      navigator: Navigator.of(context),
+                      order: list[index],
+                    )),
                   ),
                 ),
               ),
@@ -79,12 +71,5 @@ class _TestsPageState extends State<TestsPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 }

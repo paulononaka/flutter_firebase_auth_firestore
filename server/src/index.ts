@@ -8,7 +8,7 @@ import * as admin from 'firebase-admin';
 const expressServer = express();
 
 const createFunction = async (expressInstance): Promise<void> => {
-  const initialized = admin.apps.some(app => app.name === "[DEFAULT]");
+  const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
   if (!initialized) {
     admin.initializeApp();
   }
@@ -20,3 +20,10 @@ export const api = functions.region('europe-west2').https.onRequest(async (reque
   await createFunction(expressServer);
   expressServer(request, response);
 });
+
+exports.scheduledFunctionCrontab = functions.region('europe-west2').pubsub
+  .schedule('every 2 minutes')
+  .timeZone('America/Sao_Paulo')
+  .onRun(() => {
+    console.log('This will be run every 2 minutes');
+  });

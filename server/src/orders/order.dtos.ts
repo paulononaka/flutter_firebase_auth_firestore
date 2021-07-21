@@ -1,5 +1,3 @@
-import { Order } from "./order.models";
-
 export class OrderDto {
   userUid: string;
   testName: string;

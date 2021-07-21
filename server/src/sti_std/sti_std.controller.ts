@@ -4,10 +4,10 @@ import { StiStdService } from './sti_std.service';
 
 @Controller('sti_std')
 export class StiStdController {
-  constructor(private readonly stiStdService: StiStdService) { }
+  constructor(private readonly stiStdService: StiStdService) {}
 
   @Get(':genitalia')
-  async findAll(@Param() params): Promise<StiStdList> {
-    return await this.stiStdService.findAll(params.genitalia);
+  async findAll(@Param('genitalia') genitalia: string): Promise<StiStdList> {
+    return await this.stiStdService.findAll(genitalia);
   }
 }

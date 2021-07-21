@@ -5,7 +5,7 @@ import * as admin from 'firebase-admin';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  const initialized = admin.apps.some(app => app.name === "[DEFAULT]");
+  const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
   if (!initialized) {
     admin.initializeApp();
   }

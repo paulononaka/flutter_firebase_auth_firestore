@@ -6,6 +6,7 @@ import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_repository.dart';
+import 'package:flutter_firebase_auth_firestore/pages/tests/tests_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_bloc.dart';
@@ -51,8 +52,12 @@ void setup({required String baseUrl}) {
       ));
 
   // Tests
-  getIt.registerFactory<TestsBloc>(() => TestsBloc(auth: GetIt.I.get<AuthManager>()));
+  getIt.registerFactory<TestsRepository>(() => TestsRepository(rest: GetIt.I.get<RestClient>()));
   getIt.registerFactory<TestsPage>(() => TestsPage(bloc: GetIt.I.get<TestsBloc>()));
+  getIt.registerFactory<TestsBloc>(() => TestsBloc(
+        auth: GetIt.I.get<AuthManager>(),
+        repository: GetIt.I.get<TestsRepository>(),
+      ));
 
   // Profile
   getIt.registerFactory<ProfileBloc>(() => ProfileBloc(auth: GetIt.I.get<AuthManager>()));
