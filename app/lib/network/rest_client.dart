@@ -7,6 +7,13 @@ class Endpoint {
   static String stiStd(final String genitalia) => '/sti_std/${genitalia.toLowerCase()}';
   static String orders() => '/orders';
   static String ordersList(String user) => '/orders/$user';
+  static String deleteOrder(String user, String order) => '/orders/$user/$order';
+  static String updateOrderNote(
+    String user,
+    String order,
+    String notes,
+  ) =>
+      '/orders/$user/$order/$notes';
 }
 
 class RestClient {

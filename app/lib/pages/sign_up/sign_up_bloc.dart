@@ -30,7 +30,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     } on AuthException catch (e) {
       yield SignUpState.error(e.message);
     } catch (e) {
-      yield const SignUpState.error('An unknown error happened :(');
+      yield const SignUpState.error('An unknown Server error happened :(');
     }
   }
 

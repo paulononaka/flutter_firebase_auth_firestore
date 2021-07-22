@@ -23,7 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final user = await auth.currentUser();
       yield ProfileState.loaded(user);
     } catch (e) {
-      yield const ProfileState.error('An unknown error happened :(');
+      yield const ProfileState.error('An unknown Server error happened :(');
     }
   }
 
@@ -47,7 +47,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } on AuthException catch (e) {
       yield ProfileState.error(e.message);
     } catch (e) {
-      yield const ProfileState.error('An unknown error happened :(');
+      yield const ProfileState.error('An unknown Server error happened :(');
     }
   }
 }

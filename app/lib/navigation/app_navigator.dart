@@ -6,6 +6,7 @@ import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_in/sign_in_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/sign_up/sign_up_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/test_details/test_details_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const home = 'home';
   static const order = 'order';
   static const tests = 'tests';
+  static const testDetails = 'test_details';
   static const profile = 'profile';
 }
 
@@ -60,6 +62,9 @@ class _AppNavigatorState extends State<AppNavigator> {
             break;
           case Routes.tests:
             builder = (BuildContext _) => getIt.get<TestsPage>();
+            break;
+          case Routes.testDetails:
+            builder = (BuildContext _) => getIt.get<TestDetailsPage>();
             break;
           case Routes.profile:
             builder = (BuildContext _) => getIt.get<ProfilePage>();

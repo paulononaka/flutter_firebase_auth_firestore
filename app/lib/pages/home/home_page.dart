@@ -84,8 +84,10 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
                                   trailing: const Icon(Icons.arrow_right),
                                   title: Text(order.testName),
                                   subtitle: Text(order.createdAt.mMMMdyyyy),
-                                  onTap: () => widget.bloc
-                                      .add(HomeEvent.tapOnTests(navigator: Navigator.of(context))),
+                                  onTap: () => widget.bloc.add(HomeEvent.tapOnTest(
+                                    navigator: Navigator.of(context),
+                                    order: order,
+                                  )),
                                 ));
                           },
                         );

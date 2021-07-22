@@ -25,7 +25,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     } on AuthException catch (e) {
       yield SignInState.error(e.message);
     } catch (e) {
-      yield const SignInState.error('An unknown error happened :(');
+      yield const SignInState.error('An unknown Server error happened :(');
     }
   }
 

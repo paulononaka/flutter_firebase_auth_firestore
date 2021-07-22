@@ -53,11 +53,11 @@ class OrderPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: list.length,
                 itemBuilder: (context, index) => Card(
-                  elevation: 2,
+                  elevation: 1,
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    trailing: const Icon(Icons.arrow_right),
-                    title: Text(list[index].name),
+                    trailing: const Icon(Icons.save),
+                    title: Text(list[index].name, style: TextStyles.bodyText2),
                     subtitle: Text(list[index].information),
                     onTap: () => bloc.add(OrderEvent.tapOnTest(
                       navigator: Navigator.of(context),

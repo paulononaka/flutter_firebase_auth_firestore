@@ -29,18 +29,18 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
       final response = await repository.fetchTests(user.uid!);
       yield TestsState.loaded(response.orderList);
     } catch (e) {
-      yield const TestsState.error('An unknown error happened :(');
+      yield const TestsState.error('An unknown Server error happened :(');
     }
   }
 
   Stream<TestsState> _tapOnTest(NavigatorState navigator, Order order) async* {
     try {
       yield const TestsState.loading();
-      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
+      navigator.pushNamed(Routes.testDetails, arguments: order);
     } on AuthException catch (e) {
       yield TestsState.error(e.message);
     } catch (e) {
-      yield const TestsState.error('An unknown error happened :(');
+      yield const TestsState.error('An unknown Server error happened :(');
     }
   }
 }

@@ -81,7 +81,7 @@ class TextStyles {
   static const TextStyle bodyText2 = TextStyle(
       color: ColorPalette.primaryColor,
       fontFamily: "Open Sans",
-      fontSize: 19.00,
+      fontSize: 20.00,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.15,
       height: 1.71428571429);
@@ -89,7 +89,7 @@ class TextStyles {
   static const TextStyle caption = TextStyle(
       color: Color(0xFF303846),
       fontFamily: "Open Sans",
-      fontSize: 15.00,
+      fontSize: 20.00,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.00,
       height: 1.33333333333);

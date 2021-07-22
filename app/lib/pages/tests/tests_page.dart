@@ -58,11 +58,11 @@ class TestsPage extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (context, index) => Card(
-                    elevation: 2,
+                    elevation: 1,
                     margin: const EdgeInsets.all(10),
                     child: ListTile(
                       trailing: const Icon(Icons.arrow_right),
-                      title: Text(list[index].testName),
+                      title: Text(list[index].testName, style: TextStyles.bodyText2),
                       subtitle: Text(list[index].createdAt.mMMMdyyyy),
                       onTap: () => bloc.add(TestsEvent.tapOnTest(
                         navigator: Navigator.of(context),

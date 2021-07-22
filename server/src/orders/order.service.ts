@@ -7,6 +7,7 @@ import { Order, OrderList } from './order.models';
 export class OrderService {
   async save(orderDto: OrderDto): Promise<any> {
     const order = new Order(
+      '',
       orderDto.userUid,
       orderDto.testName,
       new Date(),
@@ -33,7 +34,12 @@ export class OrderService {
       .doc(user)
       .collection('orders')
       .get();
-    snapshot.forEach((doc) => orderList.push(doc.data()));
+    snapshot.forEach((doc) => {
+      var order = {};
+      order = doc.data();
+      order['id'] = doc.id;
+      return orderList.push(order);
+    });
     return new OrderList(orderList);
   }
 }

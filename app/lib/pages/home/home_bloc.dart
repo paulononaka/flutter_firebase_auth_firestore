@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'home_event.dart';
 import 'home_repository.dart';
@@ -19,6 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     yield* event.when(
       logout: _logout,
       loadHome: _loadHome,
+      tapOnTest: _tapOnTest,
       tapOnOrder: _tapOnOrder,
       tapOnTests: _tapOnTests,
       tapOnProfile: _tapOnProfile,
@@ -31,7 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final response = await repository.fetchRecentOrders(user.uid!);
       yield HomeState.loaded(response.orderList);
     } catch (e) {
-      yield const HomeState.error('An unknown error happened :(');
+      yield const HomeState.error('An unknown Server error happened :(');
     }
   }
 
@@ -42,6 +44,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _tapOnOrder(NavigatorState navigator) async* {
     navigator.pushNamed(Routes.order);
+  }
+
+  Stream<HomeState> _tapOnTest(NavigatorState navigator, Order order) async* {
+    navigator.pushNamed(Routes.testDetails, arguments: order);
   }
 
   Stream<HomeState> _tapOnTests(NavigatorState navigator) async* {

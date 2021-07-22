@@ -6,6 +6,7 @@ part 'order.g.dart';
 @freezed
 class Order with _$Order {
   factory Order({
+    required String id,
     required String userUid,
     required String testName,
     required DateTime createdAt,

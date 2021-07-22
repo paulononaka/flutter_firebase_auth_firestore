@@ -30,7 +30,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       final response = await repository.fetchStiStd(user.genitalia);
       yield OrderState.loaded(response.stiStdList);
     } catch (e) {
-      yield const OrderState.error('An unknown error happened :(');
+      yield const OrderState.error('An unknown Server error happened :(');
     }
   }
 
@@ -49,7 +49,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           fontSize: 20.0);
       navigator.pop();
     } catch (e) {
-      yield const OrderState.error('An unknown error happened :(');
+      yield const OrderState.error('An unknown Server error happened :(');
     }
   }
 }

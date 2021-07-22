@@ -7,6 +7,9 @@ import 'package:flutter_firebase_auth_firestore/pages/home/home_repository.dart'
 import 'package:flutter_firebase_auth_firestore/pages/order/order_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_repository.dart';
+import 'package:flutter_firebase_auth_firestore/pages/test_details/test_details_bloc.dart';
+import 'package:flutter_firebase_auth_firestore/pages/test_details/test_details_page.dart';
+import 'package:flutter_firebase_auth_firestore/pages/test_details/test_details_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_repository.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_bloc.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';
@@ -54,6 +57,18 @@ void setup({required String baseUrl}) {
   getIt.registerFactory<OrderBloc>(() => OrderBloc(
         auth: GetIt.I.get<AuthManager>(),
         repository: GetIt.I.get<OrderRepository>(),
+      ));
+
+  // TestDetails
+  getIt.registerFactory<TestDetailsRepository>(
+    () => TestDetailsRepository(rest: GetIt.I.get<RestClient>()),
+  );
+  getIt.registerFactory<TestDetailsPage>(
+    () => TestDetailsPage(bloc: GetIt.I.get<TestDetailsBloc>()),
+  );
+  getIt.registerFactory<TestDetailsBloc>(() => TestDetailsBloc(
+        auth: GetIt.I.get<AuthManager>(),
+        repository: GetIt.I.get<TestDetailsRepository>(),
       ));
 
   // Tests
