@@ -40,14 +40,14 @@ export class OrderService {
     };
   }
 
-  async updateNote(user: string, order: string, note: string): Promise<any> {
+  async updateNote(user: string, order: string, notes: string): Promise<any> {
     await admin
       .firestore()
       .collection('users')
       .doc(user)
       .collection('orders')
       .doc(order)
-      .update({ 'note': note })
+      .update({ 'notes': notes })
     return {
       statusCode: 201,
       message: 'Ok',
@@ -63,7 +63,7 @@ export class OrderService {
       .collection('orders')
       .get();
     snapshot.forEach((doc) => {
-      var order = {};
+      let order = {};
       order = doc.data();
       order['id'] = doc.id;
       return orderList.push(order);

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthManager {
   AuthManager()
@@ -19,6 +21,7 @@ class AuthManager {
     try {
       await _auth.createUserWithEmailAndPassword(email: user.email, password: password);
       try {
+        user = user.copyWith(uid: _auth.currentUser!.uid);
         await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
       } catch (e) {
         await _auth.currentUser?.delete();
@@ -63,14 +66,26 @@ class AuthManager {
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .withConverter<FlutfireUser>(
-            fromFirestore: (snapshot, _) =>
-                FlutfireUser.fromJson({'uid': _auth.currentUser!.uid, ...snapshot.data()!}),
-            toFirestore: (movie, _) => movie.toJson(),
+            fromFirestore: (doc, _) => FlutfireUser.fromJson(doc.data()!),
+            toFirestore: (doc, _) => doc.toJson(),
           )
           .get()
-          .then((snapshot) => snapshot.data()!);
+          .then((doc) => doc.data()!);
     } catch (e) {
-      throw AuthException(e, 'An unknown error happened when updating user :(');
+      Fluttertoast.showToast(
+          msg: "Can't find logged user. Logging out...",
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIosWeb: 3,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.blue,
+          textColor: Colors.white,
+          fontSize: 20.0);
+      try {
+        await _auth.currentUser?.delete();
+      } finally {
+        await logout();
+      }
+      throw AuthException(e, 'An unknown error returing user :(');
     }
   }
 

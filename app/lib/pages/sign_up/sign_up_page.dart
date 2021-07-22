@@ -36,7 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController genderController = TextEditingController();
 
   DateTime dateOfBirth = DateTime.now();
-  String selectedGender = '';
   String selectedGenitalia = '';
 
   @override
@@ -81,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               RoundedInputField(
                 hint: "Gender",
-                controller: nameController,
+                controller: genderController,
               ),
               DropdownField(
                 hint: 'Genitalia',
@@ -98,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         email: emailController.text,
                         name: nameController.text,
                         dateOfBith: dateOfBirth,
-                        gender: selectedGender,
+                        gender: genderController.text,
                         genitalia: selectedGenitalia),
                   ),
                 ),
