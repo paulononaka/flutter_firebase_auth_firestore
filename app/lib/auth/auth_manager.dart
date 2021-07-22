@@ -51,9 +51,7 @@ class AuthManager {
 
   Future<void> update({required String name}) async {
     try {
-      var user = await currentUser();
-      user = user.copyWith(name: name);
-      await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).update({'name': name});
     } catch (e) {
       throw AuthException(e, 'An unknown error happened when updating user :(');
     }

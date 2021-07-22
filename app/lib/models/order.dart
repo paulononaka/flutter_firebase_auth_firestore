@@ -9,6 +9,7 @@ class Order with _$Order {
     required String id,
     required String userUid,
     required String testName,
+    required String notes,
     required DateTime createdAt,
     required DateTime resultDate,
     required String result,

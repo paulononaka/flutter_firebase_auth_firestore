@@ -7,3 +7,11 @@ export class OrderDto {
     this.testName = testName;
   }
 }
+
+export class NotesDto {
+  notes: string;
+
+  constructor(notes: string) {
+    this.notes = notes;
+  }
+}

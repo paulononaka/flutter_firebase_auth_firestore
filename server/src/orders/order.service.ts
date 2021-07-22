@@ -7,12 +7,12 @@ import { Order, OrderList } from './order.models';
 export class OrderService {
   async save(orderDto: OrderDto): Promise<any> {
     const order = new Order(
-      '',
       orderDto.userUid,
       orderDto.testName,
       new Date(),
       new Date(),
       'negative',
+      ''
     );
     await admin
       .firestore()
@@ -20,6 +20,34 @@ export class OrderService {
       .doc(order.userUid)
       .collection('orders')
       .add(JSON.parse(JSON.stringify(order)));
+    return {
+      statusCode: 201,
+      message: 'Ok',
+    };
+  }
+
+  async delete(user: string, order: string): Promise<any> {
+    await admin
+      .firestore()
+      .collection('users')
+      .doc(user)
+      .collection('orders')
+      .doc(order)
+      .delete()
+    return {
+      statusCode: 201,
+      message: 'Ok',
+    };
+  }
+
+  async updateNote(user: string, order: string, note: string): Promise<any> {
+    await admin
+      .firestore()
+      .collection('users')
+      .doc(user)
+      .collection('orders')
+      .doc(order)
+      .update({ 'note': note })
     return {
       statusCode: 201,
       message: 'Ok',

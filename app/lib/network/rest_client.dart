@@ -3,17 +3,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
+enum Method { get, post, delete, put }
+
 class Endpoint {
   static String stiStd(final String genitalia) => '/sti_std/${genitalia.toLowerCase()}';
   static String orders() => '/orders';
   static String ordersList(String user) => '/orders/$user';
   static String deleteOrder(String user, String order) => '/orders/$user/$order';
-  static String updateOrderNote(
-    String user,
-    String order,
-    String notes,
-  ) =>
-      '/orders/$user/$order/$notes';
+  static String updateOrderNote(String user, String order) => '/orders/$user/$order';
 }
 
 class RestClient {
@@ -23,18 +20,30 @@ class RestClient {
   final String _baseUrl;
 
   Future<String> request({
-    final String? fullUrl,
+    final Method method = Method.get,
     final String? path,
     final String? payload,
   }) async {
-    final url = fullUrl ?? '$_baseUrl$path';
+    final url = '$_baseUrl$path';
 
     Response response;
     try {
-      response = (payload == null)
-          ? await get(Uri.parse(url))
-          : await post(Uri.parse(url),
+      switch (method) {
+        case Method.put:
+          response = await put(Uri.parse(url),
               body: payload, encoding: _utf8, headers: {'Content-Type': 'application/json'});
+          break;
+        case Method.post:
+          response = await post(Uri.parse(url),
+              body: payload, encoding: _utf8, headers: {'Content-Type': 'application/json'});
+          break;
+        case Method.delete:
+          response = await delete(Uri.parse(url));
+          break;
+        default:
+          response = await get(Uri.parse(url));
+          break;
+      }
     } catch (exception) {
       throw ConnectionException(exception);
     }

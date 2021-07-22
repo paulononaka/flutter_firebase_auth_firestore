@@ -18,6 +18,7 @@ class OrderRepository {
 
   Future<void> saveOrder({required FlutfireUser user, required StiStd stiStd}) async {
     await rest.request(
+      method: Method.post,
       path: Endpoint.orders(),
       payload: jsonEncode({'userUid': user.uid, 'testName': stiStd.name}),
     );

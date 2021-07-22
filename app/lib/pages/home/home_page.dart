@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePage();
 }
 
-class _HomePage extends State<HomePage> with WidgetsBindingObserver {
+class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -120,26 +120,5 @@ class _HomePage extends State<HomePage> with WidgetsBindingObserver {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addObserver(this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(final AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      setState(() {
-        widget.bloc.add(const HomeEvent.loadHome());
-      });
-    }
   }
 }

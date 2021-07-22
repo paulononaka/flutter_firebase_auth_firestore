@@ -45,6 +45,7 @@ class _TestDetailsPageState extends State<TestDetailsPage> {
 
   Widget loaded({required BuildContext context, String? errorMessage, required Order order}) {
     Size size = MediaQuery.of(context).size;
+    notesController.text = order.notes;
     return FlutfireScaffold(
       child: SafeArea(
         child: Column(
@@ -79,7 +80,7 @@ class _TestDetailsPageState extends State<TestDetailsPage> {
                         TestDetailsEvent.updateNotes(
                           navigator: Navigator.of(context),
                           order: order,
-                          notes: 'notes',
+                          notes: notesController.text,
                         ),
                       ),
                     ),
@@ -93,6 +94,8 @@ class _TestDetailsPageState extends State<TestDetailsPage> {
                       ),
                     ),
                     RoundedButton(
+                      color: ColorPalette.dangerColor,
+                      textColor: ColorPalette.primaryLightColor,
                       text: "Erase test",
                       onPressed: () => widget.bloc.add(
                         TestDetailsEvent.deleteOrder(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
+import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'order_event.dart';
 import 'order_repository.dart';
@@ -47,7 +48,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           backgroundColor: Colors.blue,
           textColor: Colors.white,
           fontSize: 20.0);
-      navigator.pop();
+      navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);
     } catch (e) {
       yield const OrderState.error('An unknown Server error happened :(');
     }

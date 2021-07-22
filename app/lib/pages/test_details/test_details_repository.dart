@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
 import 'package:flutter_firebase_auth_firestore/models/order.dart';
@@ -10,7 +11,10 @@ class TestDetailsRepository {
   final RestClient rest;
 
   Future<void> deleteTest({required FlutfireUser user, required Order order}) async {
-    await rest.request(path: Endpoint.deleteOrder(user.uid!, order.id));
+    await rest.request(
+      method: Method.delete,
+      path: Endpoint.deleteOrder(user.uid!, order.id),
+    );
   }
 
   Future<void> updateNotes({
@@ -18,7 +22,10 @@ class TestDetailsRepository {
     required Order order,
     required String notes,
   }) async {
-    await rest.request(path: Endpoint.updateOrderNote(user.uid!, order.id, notes));
+    await rest.request(
+        method: Method.put,
+        path: Endpoint.updateOrderNote(user.uid!, order.id),
+        payload: jsonEncode({'notes': notes}));
   }
 
   Future<void> sendEmail({required FlutfireUser user, required Order order}) async {
