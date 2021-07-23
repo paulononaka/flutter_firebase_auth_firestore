@@ -31,11 +31,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _tapOnUpdate(
     NavigatorState navigator,
     String name,
-    bool notificationsEnabled,
+    bool? notificationsEnabled,
   ) async* {
     try {
       yield const ProfileState.loading();
-      await auth.update(name: name);
+      await auth.update(name: name, notificationsEnabled: notificationsEnabled);
       Fluttertoast.showToast(
           msg: "Profile successfully updated!",
           toastLength: Toast.LENGTH_LONG,

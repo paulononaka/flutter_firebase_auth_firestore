@@ -3,9 +3,7 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class PushNotification {
-    send(message: string) {
-        const registrationToken = 'c6K8WPbmQp61Cls5XLUm7K:APA91bHl-JYxa7sqNIu_ZcPfqY7XdmYKyB7sjDlaIa18nBBF3YlCMd807mbTwjS5ItzIbykMJyCDkAjtSopvgEg_68F5LrbjVVd72_HbZZVO4EtlnZQMnG-72ruvy5Mn7PP5aGHVZm3w';
-
+    send(registrationToken: string, message: string) {
         const notification = {
             token: registrationToken,
             notification: {

@@ -8,6 +8,7 @@ class FlutfireUser with _$FlutfireUser {
   @JsonSerializable(explicitToJson: true)
   factory FlutfireUser({
     String? uid,
+    String? deviceToken,
     required String email,
     required String name,
     required DateTime dateOfBith,

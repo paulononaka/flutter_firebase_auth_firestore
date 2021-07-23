@@ -8,7 +8,7 @@ class ProfileEvent with _$ProfileEvent {
   const factory ProfileEvent.tapOnUpdate({
     required final NavigatorState navigator,
     required final String name,
-    required final bool notificationsEnabled,
+    required final bool? notificationsEnabled,
   }) = _TapOnUpdate;
 
   const factory ProfileEvent.fetchUser(TextEditingController nameController) = _fetchUser;

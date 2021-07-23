@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   DateTime dateOfBirth = DateTime.now();
   String selectedGender = '';
-  bool notificationsEnabled = true;
+  bool? notificationsEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +67,11 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: size.height * 0.35, child: Images.profile),
               RoundedInputField(hint: "Your name", controller: nameController),
               DropdownField(
-                  hint: 'Enable notifications',
+                  hint: user?.deviceToken != null
+                      ? 'Notifications enabled'
+                      : 'Notifications disabled',
                   list: _notificationsEnabled,
-                  onChanged: (value) => notificationsEnabled = value != 'No'),
+                  onChanged: (value) => notificationsEnabled = value != 'Disable notifications'),
               RoundedButton(
                 text: "Update",
                 onPressed: () => widget.bloc.add(
@@ -89,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  List<String> get _notificationsEnabled => ['Yes', 'No'];
+  List<String> get _notificationsEnabled => ['Disable notifications', 'Enable notifications'];
 
   @override
   void dispose() {

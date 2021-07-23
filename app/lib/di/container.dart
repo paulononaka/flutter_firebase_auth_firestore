@@ -33,7 +33,7 @@ Future<void> setup({required String baseUrl}) async {
 
   // Common
   getIt.registerSingleton(pushNotification);
-  getIt.registerSingleton(AuthManager());
+  getIt.registerSingleton(AuthManager(pushNotification: GetIt.I.get<PushNotification>()));
   getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory(() => RestClient(baseUrl: baseUrl));
 

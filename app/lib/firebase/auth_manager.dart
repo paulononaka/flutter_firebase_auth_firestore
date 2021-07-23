@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/push_notification.dart';
 import 'package:flutter_firebase_auth_firestore/models/flutfire_user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthManager {
-  AuthManager()
+  AuthManager({required this.pushNotification})
       : _auth = FirebaseAuth.instance,
         _firestore = FirebaseFirestore.instance;
 
+  final PushNotification pushNotification;
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
   final _logoutController = StreamController<bool>.broadcast();
@@ -21,7 +23,10 @@ class AuthManager {
     try {
       await _auth.createUserWithEmailAndPassword(email: user.email, password: password);
       try {
-        user = user.copyWith(uid: _auth.currentUser!.uid);
+        user = user.copyWith(
+          uid: _auth.currentUser!.uid,
+          deviceToken: pushNotification.deviceToken,
+        );
         await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
       } catch (e) {
         await _auth.currentUser?.delete();
@@ -52,9 +57,15 @@ class AuthManager {
     }
   }
 
-  Future<void> update({required String name}) async {
+  Future<void> update({required String name, bool? notificationsEnabled}) async {
     try {
-      await _firestore.collection('users').doc(_auth.currentUser!.uid).update({'name': name});
+      var doc = _firestore.collection('users').doc(_auth.currentUser!.uid);
+      await doc.update({'name': name});
+      if (notificationsEnabled != null) {
+        await doc.update({
+          'deviceToken': notificationsEnabled ? pushNotification.deviceToken : null,
+        });
+      }
     } catch (e) {
       throw AuthException(e, 'An unknown error happened when updating user :(');
     }
