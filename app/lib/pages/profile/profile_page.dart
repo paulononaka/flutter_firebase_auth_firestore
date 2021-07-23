@@ -50,15 +50,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget loading() {
-    widget.bloc.add(const ProfileEvent.fetchUser());
+    widget.bloc.add(ProfileEvent.fetchUser(nameController));
     return const Loading();
   }
 
   Widget loaded({required BuildContext context, FlutfireUser? user, String? errorMessage}) {
     Size size = MediaQuery.of(context).size;
-    if (user != null) {
-      nameController.text = user.name;
-    }
     return FlutfireScaffold(
       title: 'My profile',
       child: SingleChildScrollView(

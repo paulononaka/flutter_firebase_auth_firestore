@@ -9,8 +9,6 @@ import 'di/container.dart' as di;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  var baseUrl = Platform.isAndroid ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
-  await di.setup(baseUrl: baseUrl);
+  await di.setup(baseUrl: Platform.isAndroid ? 'http://10.0.2.2:3000' : 'http://localhost:3000');
   runApp(const App());
 }

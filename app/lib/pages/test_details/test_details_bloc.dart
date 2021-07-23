@@ -29,7 +29,7 @@ class TestDetailsBloc extends Bloc<TestDetailsEvent, TestDetailsState> {
 
   Stream<TestDetailsState> _deleteOrder(NavigatorState navigator, Order order) async* {
     try {
-      yield const TestDetailsState.loaded();
+      yield const TestDetailsState.loading();
       var user = await auth.currentUser();
       await repository.deleteTest(user: user, order: order);
       Fluttertoast.showToast(

@@ -18,9 +18,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield* event.when(tapOnUpdate: _tapOnUpdate, fetchUser: _fetchUser);
   }
 
-  Stream<ProfileState> _fetchUser() async* {
+  Stream<ProfileState> _fetchUser(TextEditingController nameController) async* {
     try {
       final user = await auth.currentUser();
+      nameController.text = user.name;
       yield ProfileState.loaded(user);
     } catch (e) {
       yield const ProfileState.error('An unknown Server error happened :(');

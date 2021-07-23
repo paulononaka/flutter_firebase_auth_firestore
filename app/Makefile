@@ -41,7 +41,7 @@ get:
 install: get-packages codegen
 
 run:
-	flutter run -t lib/main.dart
+	flutter run -t lib/main_prod.dart
 
 upgrade:
 	flutter pub upgrade

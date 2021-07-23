@@ -11,5 +11,5 @@ class ProfileEvent with _$ProfileEvent {
     required final bool notificationsEnabled,
   }) = _TapOnUpdate;
 
-  const factory ProfileEvent.fetchUser() = _fetchUser;
+  const factory ProfileEvent.fetchUser(TextEditingController nameController) = _fetchUser;
 }

@@ -31,6 +31,7 @@ class _TestDetailsPageState extends State<TestDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final order = ModalRoute.of(context)!.settings.arguments as Order;
+    notesController.text = order.notes;
     return BlocProvider(
       create: (_) => widget.bloc,
       child: BlocBuilder<TestDetailsBloc, TestDetailsState>(
@@ -45,7 +46,6 @@ class _TestDetailsPageState extends State<TestDetailsPage> {
 
   Widget loaded({required BuildContext context, String? errorMessage, required Order order}) {
     Size size = MediaQuery.of(context).size;
-    notesController.text = order.notes;
     return FlutfireScaffold(
       child: SafeArea(
         child: Column(
