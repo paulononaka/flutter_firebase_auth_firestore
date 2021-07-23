@@ -25,7 +25,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     try {
       if (user.name.isEmpty || user.genitalia.isEmpty) {
-        throw 'Please confirm your data';
+        throw AuthException(Exception(), 'Please confirm your data');
       }
       yield const SignUpState.loading();
       await auth.signUp(user: user, password: password);
