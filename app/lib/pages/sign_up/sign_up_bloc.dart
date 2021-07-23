@@ -24,6 +24,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     String password,
   ) async* {
     try {
+      if (user.name.isEmpty || user.genitalia.isEmpty) {
+        throw 'Please confirm your genitalia';
+      }
       yield const SignUpState.loading();
       await auth.signUp(user: user, password: password);
       navigator.pushNamedAndRemoveUntil(Routes.home, (_) => false);

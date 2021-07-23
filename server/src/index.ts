@@ -27,20 +27,34 @@ exports.scheduledFunctionOrderResults = functions.region('europe-west2').pubsub
   .schedule('every 1 minutes')
   .timeZone('America/Sao_Paulo')
   .onRun(() => {
-    admin.initializeApp();
-    const pushNotification = new PushNotification();
-    const orderService = new OrderService(pushNotification);
-    orderService.proccessOrders();
-    console.log('This will be run every 1 minutes');
+    try {
+      const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
+      if (!initialized) {
+        admin.initializeApp();
+      }
+      const pushNotification = new PushNotification();
+      const orderService = new OrderService(pushNotification);
+      orderService.proccessOrders();
+      console.log('This will be run every 1 minutes');
+    } catch (error) {
+      console.log('Error => ' + error);
+    }
   });
 
 exports.scheduledFunctionUserReminder = functions.region('europe-west2').pubsub
   .schedule('every 2 minutes')
   .timeZone('America/Sao_Paulo')
   .onRun(() => {
-    admin.initializeApp();
-    const pushNotification = new PushNotification();
-    const orderService = new OrderService(pushNotification);
-    orderService.reminderUsers()
-    console.log('This will be run every 2 minutes');
+    try {
+      const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
+      if (!initialized) {
+        admin.initializeApp();
+      }
+      const pushNotification = new PushNotification();
+      const orderService = new OrderService(pushNotification);
+      orderService.reminderUsers()
+      console.log('This will be run every 2 minutes');
+    } catch (error) {
+      console.log('Error => ' + error);
+    }
   });
