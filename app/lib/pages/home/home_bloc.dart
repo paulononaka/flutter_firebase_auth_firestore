@@ -58,7 +58,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final now = DateTime.now();
       final positiveList = response.orderList.where((order) =>
           order.result == 'positive' &&
-          now.add(Duration(minutes: sickDuration[order.testName]!)).compareTo(now) > 0);
+          order.createdAt.add(Duration(minutes: sickDuration[order.testName]!)).compareTo(now) > 0);
       final illnesses = positiveList.map((order) => order.testName).join(' / ');
       yield HomeState.loaded(response.orderList, illnesses);
     } catch (e) {
