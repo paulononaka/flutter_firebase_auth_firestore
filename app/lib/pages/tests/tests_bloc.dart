@@ -10,7 +10,7 @@ import 'tests_event.dart';
 import 'tests_state.dart';
 
 class TestsBloc extends Bloc<TestsEvent, TestsState> {
-  TestsBloc({required this.auth, required this.repository}) : super(const TestsState.loading());
+  TestsBloc({required this.auth, required this.repository}) : super(const TestsState.initial());
 
   final AuthManager auth;
   final TestsRepository repository;
@@ -25,6 +25,7 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
 
   Stream<TestsState> _fetchOrderList() async* {
     try {
+      yield const TestsState.loading();
       var user = await auth.currentUser();
       final response = await repository.fetchTests(user.uid!);
       yield TestsState.loaded(response.orderList);

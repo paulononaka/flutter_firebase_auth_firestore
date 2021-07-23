@@ -16,6 +16,10 @@
                 "-r",
                 "ts-node/register"
             ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/server/**",
+                "!**/node_modules/**"
+            ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}/server",
             "protocol": "inspector"

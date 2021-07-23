@@ -23,16 +23,21 @@ class OrderPage extends StatelessWidget {
       create: (_) => bloc,
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) => state.when(
+          initial: () => initial(),
           loading: () => loading(),
           loaded: (list) => loaded(context: context, list: list),
-          error: (message) => ServerError(errorMessage: message),
+          error: (message) => ServerError(errorMessage: message, tryAgainFunction: loading),
         ),
       ),
     );
   }
 
-  Widget loading() {
+  Widget initial() {
     bloc.add(const OrderEvent.fetchStiStdList());
+    return const Loading();
+  }
+
+  Widget loading() {
     return const Loading();
   }
 

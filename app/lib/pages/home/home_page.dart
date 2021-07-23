@@ -30,23 +30,27 @@ class _HomePage extends State<HomePage> {
       create: (_) => widget.bloc,
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) => state.when(
+          initial: () => initial(),
           loading: () => loading(),
           loaded: (mostRecent) => loaded(context, mostRecent),
-          error: (message) => ServerError(errorMessage: message),
+          error: (message) => ServerError(errorMessage: message, tryAgainFunction: initial),
         ),
       ),
     );
   }
 
-  Widget loading() {
+  Widget initial() {
     widget.bloc.add(const HomeEvent.loadHome());
+    return const Loading();
+  }
+
+  Widget loading() {
     return const Loading();
   }
 
   Widget loaded(BuildContext context, List<Order> mostRecent) {
     Size size = MediaQuery.of(context).size;
     return FlutfireScaffold(
-      title: 'Flut Fire',
       logoutOnPressed: () => widget.bloc.add(const HomeEvent.logout()),
       child: SingleChildScrollView(
         child: Column(

@@ -27,16 +27,21 @@ class TestsPage extends StatelessWidget {
       create: (_) => bloc,
       child: BlocBuilder<TestsBloc, TestsState>(
         builder: (context, state) => state.when(
+          initial: () => initial(),
           loading: () => loading(),
           loaded: (list) => loaded(context: context, list: list),
-          error: (message) => ServerError(errorMessage: message),
+          error: (message) => ServerError(errorMessage: message, tryAgainFunction: initial),
         ),
       ),
     );
   }
 
-  Widget loading() {
+  Widget initial() {
     bloc.add(const TestsEvent.fetchOrderList());
+    return const Loading();
+  }
+
+  Widget loading() {
     return const Loading();
   }
 

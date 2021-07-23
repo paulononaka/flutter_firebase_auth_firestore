@@ -5,6 +5,7 @@ part 'tests_state.freezed.dart';
 
 @freezed
 class TestsState with _$TestsState {
+  const factory TestsState.initial() = _Initial;
   const factory TestsState.loading() = _Loading;
   const factory TestsState.loaded(List<Order> orderList) = _Loaded;
   const factory TestsState.error(String message) = _Error;

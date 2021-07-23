@@ -27,6 +27,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   Stream<OrderState> _fetchStiStdList() async* {
     try {
+      yield const OrderState.loading();
       var user = await auth.currentUser();
       final response = await repository.fetchStiStd(user.genitalia);
       yield OrderState.loaded(response.stiStdList);

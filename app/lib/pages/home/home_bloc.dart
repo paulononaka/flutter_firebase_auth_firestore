@@ -10,7 +10,7 @@ import 'home_repository.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.auth, required this.repository}) : super(const HomeState.loading());
+  HomeBloc({required this.auth, required this.repository}) : super(const HomeState.initial());
 
   final AuthManager auth;
   final HomeRepository repository;
@@ -29,6 +29,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _loadHome() async* {
     try {
+      yield const HomeState.loading();
       var user = await auth.currentUser();
       final response = await repository.fetchRecentOrders(user.uid!);
       yield HomeState.loaded(response.orderList);
