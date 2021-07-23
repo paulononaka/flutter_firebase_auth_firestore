@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/order/order_page.dart';
 import 'package:flutter_firebase_auth_firestore/pages/profile/profile_page.dart';

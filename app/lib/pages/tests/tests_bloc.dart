@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:flutter_firebase_auth_firestore/pages/tests/tests_repository.dart';

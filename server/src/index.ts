@@ -10,7 +10,9 @@ const expressServer = express();
 const createFunction = async (expressInstance): Promise<void> => {
   const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
   if (!initialized) {
-    admin.initializeApp();
+    admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+    });
   }
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
   await app.init();

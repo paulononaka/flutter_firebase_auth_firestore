@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/models/sti_std.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,7 +12,7 @@ import 'order_repository.dart';
 import 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc({required this.auth, required this.repository}) : super(const OrderState.loading());
+  OrderBloc({required this.auth, required this.repository}) : super(const OrderState.initial());
 
   final AuthManager auth;
   final OrderRepository repository;

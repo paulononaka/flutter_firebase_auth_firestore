@@ -1,4 +1,5 @@
-import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/push_notification.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'package:flutter_firebase_auth_firestore/network/rest_client.dart';
 import 'package:flutter_firebase_auth_firestore/pages/home/home_bloc.dart';
@@ -23,10 +24,15 @@ import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_bloc.dart'
 import 'package:flutter_firebase_auth_firestore/pages/welcome/welcome_page.dart';
 import 'package:get_it/get_it.dart';
 
-void setup({required String baseUrl}) {
+Future<void> setup({required String baseUrl}) async {
   final getIt = GetIt.instance;
 
+  // Setup
+  final pushNotification = PushNotification();
+  await pushNotification.setup();
+
   // Common
+  getIt.registerSingleton(pushNotification);
   getIt.registerSingleton(AuthManager());
   getIt.registerFactory(() => AppNavigator(authManager: GetIt.I.get<AuthManager>()));
   getIt.registerFactory(() => RestClient(baseUrl: baseUrl));

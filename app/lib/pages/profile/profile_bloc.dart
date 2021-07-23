@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_firebase_auth_firestore/auth/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
