@@ -119,4 +119,20 @@ export class OrderService {
     });
     return new OrderList(orderList);
   }
+
+  async reminderUsers(): Promise<any> {
+    console.log('Processing orders...');
+    const _push = this.push;
+    const snapshot = await admin
+      .firestore()
+      .collection('users')
+      .get();
+    snapshot.forEach((user) => {
+      _push.send(user.data().deviceToken, 'Flutfire reminder', 'Reminder to do a new test');
+    });
+    return {
+      statusCode: 201,
+      message: 'Ok',
+    };
+  }
 }

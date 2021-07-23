@@ -23,7 +23,7 @@ export const api = functions.region('europe-west2').https.onRequest(async (reque
   expressServer(request, response);
 });
 
-exports.scheduledFunctionCrontab = functions.region('europe-west2').pubsub
+exports.scheduledFunctionOrderResults = functions.region('europe-west2').pubsub
   .schedule('every 1 minutes')
   .timeZone('America/Sao_Paulo')
   .onRun(() => {
@@ -32,4 +32,15 @@ exports.scheduledFunctionCrontab = functions.region('europe-west2').pubsub
     const orderService = new OrderService(pushNotification);
     orderService.proccessOrders();
     console.log('This will be run every 1 minutes');
+  });
+
+exports.scheduledFunctionUserReminder = functions.region('europe-west2').pubsub
+  .schedule('every 2 minutes')
+  .timeZone('America/Sao_Paulo')
+  .onRun(() => {
+    admin.initializeApp();
+    const pushNotification = new PushNotification();
+    const orderService = new OrderService(pushNotification);
+    orderService.reminderUsers()
+    console.log('This will be run every 2 minutes');
   });
