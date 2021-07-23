@@ -53,6 +53,7 @@ Future<void> setup({required String baseUrl}) async {
   getIt.registerFactory<HomeRepository>(() => HomeRepository(rest: GetIt.I.get<RestClient>()));
   getIt.registerFactory<HomePage>(() => HomePage(bloc: GetIt.I.get<HomeBloc>()));
   getIt.registerFactory<HomeBloc>(() => HomeBloc(
+        pushNotification: GetIt.I.get<PushNotification>(),
         auth: GetIt.I.get<AuthManager>(),
         repository: GetIt.I.get<HomeRepository>(),
       ));

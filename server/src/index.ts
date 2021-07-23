@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { OrderService } from './orders/order.service';
 import { PushNotification } from './firebase/push_notification';
 
 const expressServer = express();
@@ -25,10 +26,11 @@ export const api = functions.region('europe-west2').https.onRequest(async (reque
 });
 
 exports.scheduledFunctionCrontab = functions.region('europe-west2').pubsub
-  .schedule('every 2 minutes')
+  .schedule('every 5 seconds')
   .timeZone('America/Sao_Paulo')
   .onRun(() => {
-    const push = new PushNotification();
-    push.send('c6K8WPbmQp61Cls5XLUm7K:APA91bHl-JYxa7sqNIu_ZcPfqY7XdmYKyB7sjDlaIa18nBBF3YlCMd807mbTwjS5ItzIbykMJyCDkAjtSopvgEg_68F5LrbjVVd72_HbZZVO4EtlnZQMnG-72ruvy5Mn7PP5aGHVZm3w', 'Cron');
-    console.log('This will be run every 2 minutes');
+    const pushNotification = new PushNotification();
+    const orderService = new OrderService(pushNotification);
+    orderService.proccessOrders();
+    console.log('This will be run every 5 seconds');
   });

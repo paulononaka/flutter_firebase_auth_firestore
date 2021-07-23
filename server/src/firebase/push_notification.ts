@@ -3,16 +3,16 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class PushNotification {
-    send(registrationToken: string, message: string) {
+    send(registrationToken: string, title: string, message: string) {
         const notification = {
             token: registrationToken,
             notification: {
-                title: 'notificationObject.data()!.title',
+                title: title,
                 body: message
             },
             data: {
                 click_action: "FLUTTER_NOTIFICATION_CLICK",
-                title: 'notificationObject.data()!.title',
+                title: title,
                 body: message
             },
             apns: {

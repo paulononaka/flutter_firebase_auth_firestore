@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
+import 'package:flutter_firebase_auth_firestore/firebase/push_notification.dart';
 import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
 import 'home_event.dart';
@@ -10,10 +11,16 @@ import 'home_repository.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.auth, required this.repository}) : super(const HomeState.initial());
+  HomeBloc({
+    required this.auth,
+    required this.repository,
+    required this.pushNotification,
+  }) : super(const HomeState.initial());
 
   final AuthManager auth;
   final HomeRepository repository;
+  final PushNotification pushNotification;
+  bool _isListeningPushes = false;
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
@@ -28,6 +35,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Stream<HomeState> _loadHome() async* {
+    if (!_isListeningPushes) {
+      _isListeningPushes = true;
+      pushNotification.onHomeUpdate((Map<String, dynamic> _) {
+        add(const HomeEvent.loadHome());
+      });
+    }
     try {
       yield const HomeState.loading();
       var user = await auth.currentUser();

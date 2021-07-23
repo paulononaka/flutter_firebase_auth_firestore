@@ -6,7 +6,7 @@ part 'home_event.freezed.dart';
 
 @freezed
 class HomeEvent with _$HomeEvent {
-  const factory HomeEvent.loadHome() = _FetchOrderList;
+  const factory HomeEvent.loadHome() = _LoadHome;
   const factory HomeEvent.logout() = _Logout;
   const factory HomeEvent.tapOnTest({
     required final NavigatorState navigator,
