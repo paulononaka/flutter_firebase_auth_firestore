@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_firebase_auth_firestore/firebase/auth_manager.dart';
 import 'package:flutter_firebase_auth_firestore/models/order.dart';
 import 'package:flutter_firebase_auth_firestore/navigation/app_navigator.dart';
@@ -10,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'test_details_event.dart';
 import 'test_details_repository.dart';
 import 'test_details_state.dart';
+import 'package:flutter_firebase_auth_firestore/extensions/date_extension.dart';
 
 class TestDetailsBloc extends Bloc<TestDetailsEvent, TestDetailsState> {
   TestDetailsBloc({required this.auth, required this.repository})
@@ -67,6 +69,20 @@ class TestDetailsBloc extends Bloc<TestDetailsEvent, TestDetailsState> {
   }
 
   Stream<TestDetailsState> _sendEmail(NavigatorState navigator, Order order) async* {
+    final user = await auth.currentUser();
+    final Email email = Email(
+      body: '''
+        <p>Test name: ${order.testName}
+        <p>Ordered At: ${order.createdAt.mMMMdyyyyHHmma}
+        <p>Resulted At: ${order.resultDate.mMMMdyyyyHHmma}
+        <p>Result: ${order.result}
+        ''',
+      subject: 'Result of test',
+      recipients: [user.email],
+      isHTML: true,
+    );
+
+    await FlutterEmailSender.send(email);
     Fluttertoast.showToast(
         msg: "The test result was sent to your email.",
         toastLength: Toast.LENGTH_LONG,

@@ -24,6 +24,7 @@ dependencies:
   http: ^0.13.3
   fluttertoast: ^8.0.7
   carousel_slider: ^4.0.0
+  flutter_email_sender: ^5.0.2
 
 dev_dependencies:
   build_runner: ^2.0.6
