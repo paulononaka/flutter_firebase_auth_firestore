@@ -39,7 +39,7 @@ class FlutfireScaffold extends StatelessWidget {
         actions: logoutOnPressed != null
             ? [
                 LinkButton(
-                  text: ' Sair ',
+                  text: ' Logout ',
                   textColor: ColorPalette.primaryColor,
                   onPressed: logoutOnPressed!,
                 ),

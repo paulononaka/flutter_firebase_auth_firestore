@@ -26,11 +26,10 @@ class PushNotification {
   final FirebaseMessaging _cloudMessaging = FirebaseMessaging.instance;
   final _updateHome = StreamController<Map<String, dynamic>>.broadcast();
 
-  String? get deviceToken => _deviceToken;
-  String? _deviceToken;
+  Future<String?> get deviceToken async => await _cloudMessaging.getToken();
 
   Future<void> setup() async {
-    _deviceToken = await _cloudMessaging.getToken();
+    _cloudMessaging.getToken();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint(message.toString());
@@ -54,7 +53,7 @@ class PushNotification {
     _updateHome.stream.listen(listen);
   }
 
-  void requestPermissions() {
-    _cloudMessaging.requestPermission();
+  Future<void> requestPermissions() async {
+    await _cloudMessaging.requestPermission();
   }
 }

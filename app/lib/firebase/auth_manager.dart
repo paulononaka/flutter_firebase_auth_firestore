@@ -25,7 +25,7 @@ class AuthManager {
       try {
         user = user.copyWith(
           uid: _auth.currentUser!.uid,
-          deviceToken: pushNotification.deviceToken,
+          deviceToken: await pushNotification.deviceToken,
         );
         await _firestore.collection('users').doc(_auth.currentUser!.uid).set(user.toJson());
       } catch (e) {
@@ -63,7 +63,7 @@ class AuthManager {
       await doc.update({'name': name});
       if (notificationsEnabled != null) {
         await doc.update({
-          'deviceToken': notificationsEnabled ? pushNotification.deviceToken : null,
+          'deviceToken': notificationsEnabled ? await pushNotification.deviceToken : null,
         });
       }
     } catch (e) {

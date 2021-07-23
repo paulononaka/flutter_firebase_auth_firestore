@@ -45,6 +45,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _loadHome() async* {
     if (!_isListeningPushes) {
+      await pushNotification.requestPermissions();
       _isListeningPushes = true;
       pushNotification.onHomeUpdate((Map<String, dynamic> _) {
         add(const HomeEvent.loadHome());
