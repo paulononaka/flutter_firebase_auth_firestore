@@ -13,6 +13,11 @@ export class OrderController {
     return await this.service.save(order);
   }
 
+  @Get('/proccess')
+  async crons(): Promise<OrderList> {
+    return await this.service.proccessOrders();
+  }
+
   @Get(':user')
   async findAll(@Param('user') user: string): Promise<OrderList> {
     return await this.service.findAll(user);

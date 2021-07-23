@@ -32,7 +32,7 @@ class _HomePage extends State<HomePage> {
         builder: (context, state) => state.when(
           initial: () => initial(),
           loading: () => loading(),
-          loaded: (mostRecent) => loaded(context, mostRecent),
+          loaded: (mostRecent, illnesses) => loaded(context, mostRecent, illnesses),
           error: (message) => ServerError(errorMessage: message, tryAgainFunction: initial),
         ),
       ),
@@ -48,7 +48,7 @@ class _HomePage extends State<HomePage> {
     return const Loading();
   }
 
-  Widget loaded(BuildContext context, List<Order> mostRecent) {
+  Widget loaded(BuildContext context, List<Order> mostRecent, String illnesses) {
     Size size = MediaQuery.of(context).size;
     return FlutfireScaffold(
       logoutOnPressed: () => widget.bloc.add(const HomeEvent.logout()),
@@ -99,8 +99,20 @@ class _HomePage extends State<HomePage> {
                 ],
               ),
             SizedBox(height: size.height * 0.03),
-            const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: size.height * 0.2, child: Images.healthy),
+            if (illnesses.isEmpty)
+              Column(
+                children: [
+                  const Text("You are healthy!", style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: size.height * 0.2, child: Images.healthy),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  Text("You have $illnesses", style: const TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: size.height * 0.2, child: Images.illness),
+                ],
+              ),
             SizedBox(height: size.height * 0.03),
             RoundedButton(
               text: "Order new test kit",

@@ -18,7 +18,7 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "deploy": "firebase deploy --only functions",
-    "deploy:cron": "firebase deploy --only functions:scheduledFunctionCrontab",
+    "deploy:cron": "GOOGLE_APPLICATION_CREDENTIALS=$HOME/serviceAccountKey.json firebase deploy --only functions:scheduledFunctionCrontab",
     "logs": "firebase functions:log"
   },
   "engines": {

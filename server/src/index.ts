@@ -12,9 +12,7 @@ const expressServer = express();
 const createFunction = async (expressInstance): Promise<void> => {
   const initialized = admin.apps.some((app) => app.name === '[DEFAULT]');
   if (!initialized) {
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault(),
-    });
+    admin.initializeApp();
   }
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
   await app.init();
@@ -26,11 +24,12 @@ export const api = functions.region('europe-west2').https.onRequest(async (reque
 });
 
 exports.scheduledFunctionCrontab = functions.region('europe-west2').pubsub
-  .schedule('every 5 seconds')
+  .schedule('every 1 minutes')
   .timeZone('America/Sao_Paulo')
   .onRun(() => {
+    admin.initializeApp();
     const pushNotification = new PushNotification();
     const orderService = new OrderService(pushNotification);
     orderService.proccessOrders();
-    console.log('This will be run every 5 seconds');
+    console.log('This will be run every 1 minutes');
   });

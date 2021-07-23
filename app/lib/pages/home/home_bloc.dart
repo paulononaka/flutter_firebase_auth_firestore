@@ -22,6 +22,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final PushNotification pushNotification;
   bool _isListeningPushes = false;
 
+  final Map<String, int> sickDuration = {
+    'Chlamydia': 4,
+    'Gonorrhea': 6,
+    'Genital herpes': 8,
+    'Syphilis': 10,
+    'HPV': 5,
+    'Trichomoniasis': 5,
+  };
+
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     yield* event.when(
@@ -45,7 +54,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield const HomeState.loading();
       var user = await auth.currentUser();
       final response = await repository.fetchRecentOrders(user.uid!);
-      yield HomeState.loaded(response.orderList);
+
+      final now = DateTime.now();
+      final positiveList = response.orderList.where((order) =>
+          order.result == 'positive' &&
+          now.add(Duration(minutes: sickDuration[order.testName]!)).compareTo(now) > 0);
+      final illnesses = positiveList.map((order) => order.testName).join(' / ');
+      yield HomeState.loaded(response.orderList, illnesses);
     } catch (e) {
       yield const HomeState.error('An unknown Server error happened :(');
     }

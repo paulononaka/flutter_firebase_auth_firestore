@@ -17,10 +17,17 @@ export class OrderService {
       '',
       ''
     );
+    const doc = await admin
+      .firestore()
+      .collection('orders_queue')
+      .add(JSON.parse(JSON.stringify(order)));
     await admin
       .firestore()
-      .collection('to_be_orders')
-      .add(JSON.parse(JSON.stringify(order)));
+      .collection('users')
+      .doc(orderDto.userUid)
+      .collection('orders')
+      .doc(doc.id)
+      .set(JSON.parse(JSON.stringify(order)));
     return {
       statusCode: 201,
       message: 'Ok',
@@ -28,16 +35,19 @@ export class OrderService {
   }
 
   async proccessOrders(): Promise<any> {
+    console.log('Processing orders...');
     const _push = this.push;
-    const toBeOrders = [];
+
     const snapshot = await admin
       .firestore()
-      .collection('to_be_orders')
+      .collection('orders_queue')
       .get();
+
     snapshot.forEach((doc) => {
       setTimeout(async function () {
         const order = doc.data();
 
+        console.log('Processing ' + order.testName + '...');
         order.result = ['negative', 'positive'][Math.floor(Math.random() * 2)];
         order.resultDate = new Date();
 
@@ -50,10 +60,13 @@ export class OrderService {
         _push.send(user.data().deviceToken, 'Result of ' + order.testName, 'Result of ' + order.testName + ' is ' + order.result);
         userDoc
           .collection('orders')
-          .add(JSON.parse(JSON.stringify(order)));
+          .doc(doc.ref.id)
+          .set(JSON.parse(JSON.stringify(order)));
 
         doc.ref.delete();
-      }, Math.floor(Math.random() * (20 - 5 + 1)) + 5);
+        console.log(order.testName + ' finished ' + '...');
+
+      }, Math.floor(Math.random() * (2000 - 5000 + 1)) + 5000);
     });
 
     return {
